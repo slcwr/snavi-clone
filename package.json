@@ -1,25 +1,40 @@
 {
-    "dependencies": {
-      "next": "^14.0.0",
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-      "typeorm": "^0.3.17",
-      "pg": "^8.11.3",
-      "@openapi-contrib/openapi-schema-to-json-schema": "^5.0.0",
-      "swagger-ui-react": "^5.10.0"
-    },
-    "devDependencies": {
-      "@storybook/react": "^7.5.0",
-      "@storybook/builder-webpack5": "^7.5.0",
-      "@types/node": "^20.8.0",
-      "@types/react": "^18.2.0",
-      "typescript": "^5.2.0"
-    },
-    "scripts": {
-      "dev": "next dev",
-      "build": "next build",
-      "start": "next start",
-      "storybook": "storybook dev -p 6006",
-      "build-storybook": "storybook build"
-    }
+  "dependencies": {
+    "@openapi-contrib/openapi-schema-to-json-schema": "^5.0.0",
+    "next": "^14.0.0",
+    "pg": "^8.11.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "swagger-ui-react": "^5.10.0",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@chromatic-com/storybook": "^1.9.0",
+    "@mdx-js/react": "^3.1.0",
+    "@storybook/addon-essentials": "^8.3.6",
+    "@storybook/addon-interactions": "^8.3.6",
+    "@storybook/addon-links": "^8.3.6",
+    "@storybook/addon-onboarding": "^8.3.6",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/blocks": "^8.3.6",
+    "@storybook/builder-webpack5": "^7.5.0",
+    "@storybook/nextjs": "^8.3.6",
+    "@storybook/react": "^7.5.0",
+    "@storybook/test": "^8.3.6",
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.0",
+    "storybook": "^8.3.6",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "typescript": "^5.2.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   }
+}
