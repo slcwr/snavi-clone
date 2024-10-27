@@ -1,12 +1,14 @@
 {
   "dependencies": {
     "@openapi-contrib/openapi-schema-to-json-schema": "^5.0.0",
+    "@types/pg": "^8.11.10",
     "next": "^14.0.0",
-    "pg": "^8.11.3",
+    "pg": "^8.13.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "reflect-metadata": "^0.2.2",
     "swagger-ui-react": "^5.10.0",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",
