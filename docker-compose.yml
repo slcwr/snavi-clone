@@ -2,12 +2,15 @@ version: '3.8'
 
 services:
   app:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    user: "node"
     ports:
       - "3000:3000"
-      - "6006:6006"  
+      - "6006:6006"
     volumes:
       - .:/app
       - /app/node_modules
@@ -36,6 +39,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+
 networks:
   app-network:
     driver: bridge
