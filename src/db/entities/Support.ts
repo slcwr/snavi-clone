@@ -10,23 +10,23 @@ import {
   @Entity('products')
   export class Support extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id!: string;
   
     @Column({ length: 100 })
-    productno: string;
+    productno!: string;
   
     @Column({ unique: true })
-    productname: string;
+    productname!: string;
   
     @Column({ select: false })
-    price: number;
+    price!: number;
   
     @Column({ default: true })
-    isActive: boolean;
+    isActive!: boolean;
   
     @CreateDateColumn()
-    createdAt: Date;
+    createdAt!: Date;
   
     @UpdateDateColumn()
-    updatedAt: Date;
+    updatedAt!: Date;
   }
