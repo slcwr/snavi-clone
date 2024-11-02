@@ -1,6 +1,6 @@
 // components/molecules/ProductCard/index.tsx
 import { Text } from '../../../components/atoms/Text';
-import { Button } from '../../../components/atoms/Button';
+import Button  from '../../../components/atoms/Button';
 
 export const ProductCard = ({ product }: any) => {
   return (

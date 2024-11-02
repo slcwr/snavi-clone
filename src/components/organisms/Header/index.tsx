@@ -1,14 +1,13 @@
 // components/organisms/Header/index.tsx
-//import { Logo } from '../../components/atoms/Logo';
+import styles from './Header.module.scss';
 import { Navigation } from '../../../components/molecules/Navigation';
-
 
 export const Header = () => {
   return (
-    <header className="bg-white shadow">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header className={styles.header}>
+      <div className={styles.header__container}>
         {/* <Logo /> */}
-        <Navigation />
+      <h1>SoftNavi</h1>
       </div>
     </header>
   );

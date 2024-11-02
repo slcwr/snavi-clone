@@ -2,6 +2,7 @@
 import { Header } from '../../../components/organisms/Header';
 import { SearchSection } from '../../../components/organisms/SerchSection';
 import { ProductList } from '../../../components/organisms/ProductList';
+//import styles from '../../../styles/global.scss';
 
 export const HomeTemplate = ({ products }: any) => {
   return (

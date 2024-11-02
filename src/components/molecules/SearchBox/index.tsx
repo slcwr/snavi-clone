@@ -1,6 +1,6 @@
 // components/molecules/SearchBox/index.tsx
 import { Input } from '../../../components/atoms/Input';
-import { Button } from '../../../components/atoms/Button';
+import Button  from '../../../components/atoms/Button';
 
 export const SearchBox = () => {
   return (

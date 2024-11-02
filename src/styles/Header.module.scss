@@ -1,0 +1,39 @@
+// components/Header/Header.module.scss
+.header {
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    &__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    &__logo {
+      img {
+        height: 40px;
+        width: auto;
+      }
+    }
+  
+    &__nav {
+      display: flex;
+      gap: 2rem;
+  
+      a {
+        color: white;
+        text-decoration: none;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        transition: background-color 0.3s;
+  
+        &:hover {
+          background-color: var(--secondary-color);
+          border-radius: 4px;
+        }
+      }
+    }
+  }
