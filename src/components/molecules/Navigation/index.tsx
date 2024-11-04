@@ -154,31 +154,5 @@ export const Navigation: React.FC = () => {
   );
 };
 
-// オプション: スタイルをより詳細に定義する場合
-const styles = {
-  navItem: `
-    relative
-    px-3 py-2
-    text-gray-700 hover:text-blue-600
-    transition-colors duration-200
-  `,
-  dropdown: `
-    absolute
-    left-0 mt-2
-    w-48
-    bg-white
-    rounded-md shadow-lg
-    z-50
-    opacity-0 group-hover:opacity-100
-    transition-opacity duration-200
-  `,
-  dropdownItem: `
-    block
-    px-4 py-2
-    text-sm text-gray-700
-    hover:bg-gray-100
-    transition-colors duration-150
-  `
-};
 
 export default Navigation;

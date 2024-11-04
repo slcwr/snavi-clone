@@ -1,0 +1,29 @@
+// src/components/templates/Layout/Layout.module.scss
+.layout {
+    min-height: 100vh;
+    background-color: #fff;
+  
+    &__header {
+      background: linear-gradient(90deg, #0066B3 0%, #00A0E9 100%);
+      padding: 20px 0;
+      margin-bottom: 20px;
+    }
+  
+    &__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 24px;
+    }
+  
+    &__sidebar {
+      width: 240px;
+      flex-shrink: 0;
+    }
+  
+    &__main {
+      flex: 1;
+      min-width: 0;
+    }
+  }
