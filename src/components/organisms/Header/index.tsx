@@ -1,6 +1,5 @@
 // components/organisms/Header/index.tsx
 import styles from './Header.module.scss';
-import { Navigation } from '../../../components/molecules/Navigation';
 
 export const Header = () => {
   return (

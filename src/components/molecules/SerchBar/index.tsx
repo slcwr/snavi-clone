@@ -1,8 +1,20 @@
 // components/organisms/Sidebar/index.tsx
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { ModalContent } from './ModalContent'
 import styles from './Sidebar.module.scss';
 
 export const Sidebar: FC = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = (e: React.MouseEvent) => {
+      e.preventDefault();
+      setIsModalOpen(true);
+    };
+  
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+    };
+
   return (
     <aside className={styles.sidebar}>
       {/* 製品情報・見積り */}
@@ -30,8 +42,11 @@ export const Sidebar: FC = () => {
             <a href="#" className={styles.sidebar__linkhead2}>表示対象選択</a>
         </li>
          <p className={styles.sidebar__filterLabel}>「頭文字索引」には無効です。</p>
-         <a href="#" className={styles.sidebar__link2}>OS・機種で絞り込む</a>
-        
+         <a href="#" className={styles.sidebar__link2} onClick={handleOpenModal}  >OS・機種で絞り込む</a>
+         <ModalContent 
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
         
 
         <div className={styles.sidebar__filterGroup}>
