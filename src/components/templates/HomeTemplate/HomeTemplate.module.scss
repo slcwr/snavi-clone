@@ -5,6 +5,7 @@
   &__sidebar {
     width: 15%;
     border-radius: 4px;
+    margin-top: -90px; // サイドバーの開始位置を下げる
   }
 
   &__content {

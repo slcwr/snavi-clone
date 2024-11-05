@@ -5,6 +5,7 @@ import { Footer } from '../../../components/organisms/Footer';
 import { ProductList } from '../../../components/organisms/ProductList';
 import { Sidebar } from '../../molecules/SearchBar';
 import { ProductSearch } from '../../organisms/ProductSearch';
+import { ConfigurationSearch } from '../../molecules/SearchForm/ConfigurationSearch';
 
 // components/templates/HomeTemplate/index.tsx
 import styles from  './HomeTemplate.module.scss';
@@ -14,8 +15,10 @@ export const HomeTemplate = ({ products }: any) => {
   return (
     <div className={styles['home-template']}>
       <Header />
+      <ConfigurationSearch />
       <main className={styles.container}>
         <div className={styles['main-content']}>
+        
           <div className={styles['main-content__sidebar']}>
             <Sidebar />
           </div>
