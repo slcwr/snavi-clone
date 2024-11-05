@@ -11,7 +11,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
     <div className={styles.layout}>
       <header className={styles.layout__header}>
         <div className="container">
-          <h1>ソフトウェア販売支援ポータル</h1>
+          <h1>ソフトウェア販売支援ポータル!!!</h1>
           <div>SoftNAVI</div>
         </div>
       </header>
