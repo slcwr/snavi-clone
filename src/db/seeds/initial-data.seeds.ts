@@ -1,7 +1,7 @@
                                     // src/database/seeds/initial-data.seed.ts
 import { DataSource } from "typeorm";
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
-import { Product } from "../entities/Product";
+const { Product } = require('../../db/entities/Product');
 
 export class InitialDataSeeder implements Seeder {
   async run(

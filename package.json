@@ -3,6 +3,7 @@
     "@openapi-contrib/openapi-schema-to-json-schema": "^5.0.0",
     "@types/pg": "^8.11.10",
     "next": "^14.0.0",
+    "npx": "^10.2.2",
     "pg": "^8.13.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

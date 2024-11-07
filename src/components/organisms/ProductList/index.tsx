@@ -1,6 +1,6 @@
 // components/organisms/ProductList/index.tsx
 import { ProductCard } from '../../../components/molecules/ProductCard';
-import { Product } from '../../../db/entities/Product';  
+const { Product } = require('../../../db/entities/Product');
 
 interface ProductListProps {
     products: Product[];  // エンティティの配列として型定義

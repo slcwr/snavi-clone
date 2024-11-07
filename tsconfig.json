@@ -15,7 +15,7 @@
       "esnext"
     ],
     "allowJs": true,
-    "noEmit": true,
+    "noEmit": false,
     "incremental": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -26,7 +26,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/db/migrations/1730857357481-CreateInitialTables.js"  ],
   "exclude": [
     "node_modules"
   ]

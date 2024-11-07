@@ -10,8 +10,8 @@ export const databaseConfig: DataSourceOptions = {
     database: process.env.DB_NAME || "myapp",
     synchronize: process.env.NODE_ENV === 'development',
     logging: process.env.NODE_ENV === 'development',
-    entities: ['src/db/entities/**/*.ts'],
-    migrations: ['src/db/migrations/**/*.ts'],
+    entities: ['dist/entities/**/*.js'],
+    migrations: ['src/db/migrations/**/*.js'],
     subscribers: ['src/db/subscribers/**/*.ts']
   };
 
