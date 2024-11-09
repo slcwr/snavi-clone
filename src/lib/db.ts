@@ -12,6 +12,7 @@ export async function initializeDatabase() {
       console.error('Error connecting to database:', error);
       throw error;
     }
-  }
+  }　
   return AppDataSource;
 }
+

@@ -2,7 +2,7 @@
 import { Header } from '../../../components/organisms/Header';
 import { Footer } from '../../../components/organisms/Footer';
 //import { SearchSection } from '../../../components/organisms/SerchSection';
-import { ProductList } from '../../../components/organisms/ProductList';
+//import { ProductList } from '../../../components/organisms/ProductList';
 import { Sidebar } from '../../molecules/SearchBar';
 import { ProductSearch } from '../../organisms/ProductSearch';
 import { ConfigurationSearch } from '../../molecules/SearchForm/ConfigurationSearch';
@@ -24,7 +24,7 @@ export const HomeTemplate = ({ products }: any) => {
           </div>
           <div className={styles['main-content__content']}>
             <ProductSearch />
-            <ProductList products={products} />
+            
           </div>
         </div>
       </main>

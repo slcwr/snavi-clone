@@ -1,5 +1,6 @@
 // components/atoms/Button/SearchButton.tsx
 import { useRouter } from 'next/router';
+import { SearchParams } from '../../../types/api';
 
 export const SearchButton = ({ keyword, modelNumber }: {
   keyword?: string;
@@ -8,14 +9,24 @@ export const SearchButton = ({ keyword, modelNumber }: {
   const router = useRouter();
 
   const handleSearch = () => {
-    // 検索パラメータを構築
     const params = new URLSearchParams();
-    if (keyword) params.append('keyword', keyword);
-    if (modelNumber) params.append('modelNumber', modelNumber);
-
-    // 製品一覧ページへ遷移
-    router.push(`/products?${params.toString()}`);
+     // undefinedチェックを行ってから追加
+     if (typeof keyword === 'string' && keyword) {
+      params.append('keyword', keyword);
+    }
+    if (typeof modelNumber === 'string' && modelNumber) {
+      params.append('modelNumber', modelNumber);
+    }
+    // クエリオブジェクトとして渡す
+    router.push({
+      pathname: '/products',
+      query: {
+        keyword: keyword || undefined,
+        modelNumber: modelNumber || undefined
+      }
+    });
   };
+
 
   return (
     <button 

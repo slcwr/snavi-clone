@@ -1,5 +1,5 @@
 // components/organisms/ProductList/index.tsx
-import { ProductCard } from '../../../components/molecules/ProductCard';
+//import { ProductCard } from '../../../components/molecules/ProductCard';
 const { Product } = require('../../../db/entities/Product');
 
 interface ProductListProps {
