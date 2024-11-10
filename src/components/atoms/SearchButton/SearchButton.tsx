@@ -17,6 +17,14 @@ export const SearchButton = ({ keyword, modelNumber }: {
     if (typeof modelNumber === 'string' && modelNumber) {
       params.append('modelNumber', modelNumber);
     }
+    // URLSearchParamsの内容を確認する方法
+    console.log('params string:', params.toString());
+    console.log('params entries:', Array.from(params.entries()));
+    console.log('Query params:', {
+      keyword: keyword || undefined,
+      modelNumber: modelNumber || undefined
+    });
+    
     // クエリオブジェクトとして渡す
     router.push({
       pathname: '/products',

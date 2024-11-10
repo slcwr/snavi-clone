@@ -6,14 +6,22 @@ const router_1 = require("next/router");
 const SearchButton = ({ keyword, modelNumber }) => {
     const router = (0, router_1.useRouter)();
     const handleSearch = () => {
-        // 検索パラメータを構築
         const params = new URLSearchParams();
-        if (keyword)
+        // undefinedチェックを行ってから追加
+        if (typeof keyword === 'string' && keyword) {
             params.append('keyword', keyword);
-        if (modelNumber)
+        }
+        if (typeof modelNumber === 'string' && modelNumber) {
             params.append('modelNumber', modelNumber);
-        // 製品一覧ページへ遷移
-        router.push(`/products?${params.toString()}`);
+        }
+        // クエリオブジェクトとして渡す
+        router.push({
+            pathname: '/products',
+            query: {
+                keyword: keyword || undefined,
+                modelNumber: modelNumber || undefined
+            }
+        });
     };
     return (<button className="search-button" onClick={handleSearch}>
       検索

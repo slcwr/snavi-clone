@@ -10,10 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = void 0;
-// src/entities/Products.ts
-require("reflect-metadata");
+// db/entities/Product.ts
 const typeorm_1 = require("typeorm");
-let Product = class Product extends typeorm_1.BaseEntity {
+let Product = class Product {
 };
 exports.Product = Product;
 __decorate([
@@ -45,5 +44,5 @@ __decorate([
     __metadata("design:type", Date)
 ], Product.prototype, "updatedAt", void 0);
 exports.Product = Product = __decorate([
-    (0, typeorm_1.Entity)('products')
+    (0, typeorm_1.Entity)('products') // テーブル名を明示的に指定
 ], Product);

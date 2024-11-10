@@ -1,37 +1,66 @@
 import express from 'express';
 import next from 'next';
-import { productRoutes } from './routes/productRoutes';
-import { AppDataSource } from './db/data-source';
-import { useRouter } from 'next/router';
-import { SearchParams } from './types/api';
+import cors from 'cors';
+import { ExpressDataSource } from './db/express-data-source';
+import { productRoutes } from './server/routes/productRoutes';
+import 'reflect-metadata';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
-app.prepare().then(() => {
-  const server = express();
-  const router = useRouter();
+// データベース接続を初期化してからサーバーを起動
+ExpressDataSource.initialize()
+  .then(() => {
+    console.log("Database connection initialized");
+    
+    return app.prepare();
+  })
+  .then(() => {
+    const server = express();
 
-  // APIルートの設定
-  server.use('/api', productRoutes);
+    // CORS設定
+    server.use(cors({
+      origin: process.env.NODE_ENV === 'development'
+        ? ['http://localhost:3000']
+        : [process.env.PRODUCTION_URL || ''],
+      credentials: true
+    }));
 
-  // Next.jsのページハンドリング
-  server.get('/products', (req, res, next) => {
-    // Express側でのデータ処理
-     // クエリパラメータの型安全な取得
-  const { keyword, modelNumber } = router.query as SearchParams;
-    // 必要な処理を行った後、Next.jsのページにレンダリングを委譲
-    return app.render(req, res, '/products', { keyword, modelNumber });
+    // APIルートの設定
+    server.use('/api', productRoutes);
+
+    // Next.jsのハンドリング
+    server.all('*', (req, res) => {
+      return handle(req, res);
+    });
+
+    // エラーハンドリングミドルウェア
+    server.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+      console.error('Server error:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    });
+
+    server.listen(port, () => {
+      console.log(`> Server ready on http://localhost:${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error during initialization:', error);
+    process.exit(1);
   });
 
-  // その他のルートはNext.jsにハンドリングを委譲
-  server.all('*', (req, res) => {
-    return handle(req, res);
-  });
-
-  server.listen(port, () => {
-    console.log(`> Ready on http://localhost:${port}`);
-  });
+// グレースフルシャットダウンの処理
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received.');
+  ExpressDataSource.destroy()
+    .then(() => {
+      console.log('Database connection closed.');
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error('Error during shutdown:', error);
+      process.exit(1);
+    });
 });

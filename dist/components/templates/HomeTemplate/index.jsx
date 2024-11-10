@@ -8,7 +8,7 @@ exports.HomeTemplate = void 0;
 const Header_1 = require("../../../components/organisms/Header");
 const Footer_1 = require("../../../components/organisms/Footer");
 //import { SearchSection } from '../../../components/organisms/SerchSection';
-const ProductList_1 = require("../../../components/organisms/ProductList");
+//import { ProductList } from '../../../components/organisms/ProductList';
 const SearchBar_1 = require("../../molecules/SearchBar");
 const ProductSearch_1 = require("../../organisms/ProductSearch");
 const ConfigurationSearch_1 = require("../../molecules/SearchForm/ConfigurationSearch");
@@ -26,7 +26,7 @@ const HomeTemplate = ({ products }) => {
           </div>
           <div className={HomeTemplate_module_scss_1.default['main-content__content']}>
             <ProductSearch_1.ProductSearch />
-            <ProductList_1.ProductList products={products}/>
+            
           </div>
         </div>
       </main>

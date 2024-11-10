@@ -2,6 +2,7 @@
   "dependencies": {
     "@openapi-contrib/openapi-schema-to-json-schema": "^5.0.0",
     "@types/pg": "^8.11.10",
+    "cors": "^2.8.5",
     "next": "^14.0.0",
     "npx": "^10.2.2",
     "pg": "^8.13.1",
@@ -28,6 +29,8 @@
     "@storybook/nextjs": "^8.3.6",
     "@storybook/react": "^7.5.0",
     "@storybook/test": "^8.3.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/node": "^20.17.6",
     "@types/react": "^18.2.0",
     "sass": "^1.80.5",
@@ -37,17 +40,19 @@
     "typescript": "^5.6.3"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "ts-node src/server.ts",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production ts-node src/server.ts",
+    "next:dev": "next dev",
+    "next:start": "next start",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migration:generate": "npm run typeorm migration:generate -- -d ./src/db/data-source.ts",
+    "migration:generate": "npm run typeorm migration:generate -- -d ./src/db/express-data-source.ts",
     "migration:create": "npm run typeorm migration:create",
-    "migration:run": "npm run typeorm migration:run -- -d ./src/db/data-source.ts",
+    "migration:run": "npm run typeorm migration:run -- -d ./src/db/express-data-source.ts",
     "seed": "ts-node src/db/seeds/run-seed.ts",
-    "migration:revert": "npm run typeorm migration:revert -- -d ./src/db/data-source.ts",
-    "migration:show": "npm run typeorm migration:show -- -d ./src/db/data-source.ts"
+    "migration:revert": "npm run typeorm migration:revert -- -d ./src/db/express-data-source.ts",
+    "migration:show": "npm run typeorm migration:show -- -d ./src/db/express-data-source.ts"
   }
 }

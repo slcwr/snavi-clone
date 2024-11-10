@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InitialDataSeeder = void 0;
-const Product_1 = require("../entities/Product");
+const { Product } = require('../../db/entities/Product');
 class InitialDataSeeder {
     async run(dataSource, factoryManager) {
-        const productRepository = dataSource.getRepository(Product_1.Product);
+        const productRepository = dataSource.getRepository(Product);
         const products = [
             {
                 productno: "A-01",

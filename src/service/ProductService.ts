@@ -1,5 +1,6 @@
-import { AppDataSource } from '../db/data-source';
-const { Product } = require('../db/entities/Product');
+//src/service/ProductService.ts
+import { ExpressDataSource } from '../db/express-data-source';
+import { Product } from '../db/entities/Product';
 
 interface SearchParams {
   keyword?: string;
@@ -7,11 +8,31 @@ interface SearchParams {
 }
 
 export class ProductService {
-  private productRepository;
+  private productRepository: any;
 
   constructor() {
-    this.productRepository = AppDataSource.getRepository(Product);
+    this.initialize();
   }
+// 初期化用の非同期メソッド
+private async initialize() {
+  try {
+    if (!ExpressDataSource.isInitialized) {
+      await ExpressDataSource.initialize();
+    }
+    this.productRepository = ExpressDataSource.getRepository(Product);
+  } catch (error) {
+    console.error('Failed to initialize ProductService:', error);
+    throw error;
+  }
+}
+
+  // constructor() {
+  //   // データソースの初期化確認
+  //   if (!AppDataSource.isInitialized) {
+  //     await AppDataSource.initialize();
+  //   }
+  //   this.productRepository = AppDataSource.getRepository(Product);
+  // }
 
   async searchProducts(params: SearchParams) {
     const { keyword, modelNumber } = params;
@@ -22,7 +43,7 @@ export class ProductService {
         '(product.productname ILIKE :keyword OR product.productno = :modelNumber)',
         {
           keyword: `%${keyword}%`,
-          modelNumber
+          modelNumber: `%${modelNumber}%`
         }
       );
     } else if (keyword) {
@@ -31,7 +52,7 @@ export class ProductService {
       });
     } else if (modelNumber) {
       queryBuilder.where('product.productno = :modelNumber', {
-        modelNumber
+        modelNumber: `%${modelNumber}%`
       });
     }
 

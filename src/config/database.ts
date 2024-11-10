@@ -1,4 +1,5 @@
 import { DataSourceOptions } from 'typeorm';
+import { Product } from '../db/entities/Product'
 
 
 export const databaseConfig: DataSourceOptions = {
@@ -10,7 +11,7 @@ export const databaseConfig: DataSourceOptions = {
     database: process.env.DB_NAME || "myapp",
     synchronize: process.env.NODE_ENV === 'development',
     logging: process.env.NODE_ENV === 'development',
-    entities: ['dist/entities/**/*.js'],
+    entities: [Product],
     migrations: ['src/db/migrations/**/*.js'],
     subscribers: ['src/db/subscribers/**/*.ts']
   };

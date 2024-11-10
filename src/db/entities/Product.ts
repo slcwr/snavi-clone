@@ -1,16 +1,9 @@
  // db/entities/Product.ts
-const { 
-  Entity, 
-  PrimaryGeneratedColumn, 
-  Column, 
-  CreateDateColumn, 
-  UpdateDateColumn 
-} = require('typeorm');
+import { Entity, Column, PrimaryGeneratedColumn,CreateDateColumn, 
+  UpdateDateColumn } from 'typeorm';
 
-require('reflect-metadata');
-
-@Entity('products')
-class Product {
+@Entity('products')  // テーブル名を明示的に指定
+export class Product {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -32,5 +25,3 @@ class Product {
   @UpdateDateColumn()
   updatedAt!: Date;
 }
-
-module.exports = { Product };
