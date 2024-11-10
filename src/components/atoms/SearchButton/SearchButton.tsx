@@ -24,7 +24,7 @@ export const SearchButton = ({ keyword, modelNumber }: {
       keyword: keyword || undefined,
       modelNumber: modelNumber || undefined
     });
-    
+
     // クエリオブジェクトとして渡す
     router.push({
       pathname: '/products',
@@ -34,7 +34,6 @@ export const SearchButton = ({ keyword, modelNumber }: {
       }
     });
   };
-
 
   return (
     <button 

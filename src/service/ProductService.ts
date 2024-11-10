@@ -9,9 +9,12 @@ interface SearchParams {
 
 export class ProductService {
   private productRepository: any;
+  private initialized = false;
 
   constructor() {
-    this.initialize();
+    this.initialize().catch(error => {
+      console.error('Failed to initialize ProductService:', error);
+    });
   }
 // 初期化用の非同期メソッド
 private async initialize() {
@@ -43,7 +46,7 @@ private async initialize() {
         '(product.productname ILIKE :keyword OR product.productno = :modelNumber)',
         {
           keyword: `%${keyword}%`,
-          modelNumber: `%${modelNumber}%`
+          modelNumber
         }
       );
     } else if (keyword) {
@@ -51,8 +54,8 @@ private async initialize() {
         keyword: `%${keyword}%`
       });
     } else if (modelNumber) {
-      queryBuilder.where('product.productno = :modelNumber', {
-        modelNumber: `%${modelNumber}%`
+      queryBuilder.where('product.productno ILIKE :modelNumber', {
+        modelNumber
       });
     }
 
