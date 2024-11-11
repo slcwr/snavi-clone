@@ -1,46 +1,83 @@
 // components/atoms/Button/SearchButton.tsx
+import { Button } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';
-import { SearchParams } from '../../../types/api';
+import { styled } from '@mui/material/styles';
 
-export const SearchButton = ({ keyword, modelNumber }: {
+interface SearchButtonProps {
   keyword?: string;
   modelNumber?: string;
-}) => {
+  disabled?: boolean;
+  size?: 'small' | 'medium' | 'large';
+}
+
+// スタイルのカスタマイズ（オプション）
+const StyledButton = styled(Button)(({ theme }) => ({
+  minWidth: '120px',
+  '&.MuiButton-contained': {
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
+  },
+}));
+
+export const SearchButton = ({ 
+  keyword, 
+  modelNumber,
+  disabled = false,
+  size = 'small'
+}: SearchButtonProps) => {
   const router = useRouter();
 
-  const handleSearch = () => {
-    const params = new URLSearchParams();
-     // undefinedチェックを行ってから追加
-     if (typeof keyword === 'string' && keyword) {
-      params.append('keyword', keyword);
-    }
-    if (typeof modelNumber === 'string' && modelNumber) {
-      params.append('modelNumber', modelNumber);
-    }
-    // URLSearchParamsの内容を確認する方法
-    console.log('params string:', params.toString());
-    console.log('params entries:', Array.from(params.entries()));
-    console.log('Query params:', {
-      keyword: keyword || undefined,
-      modelNumber: modelNumber || undefined
-    });
-
-    // クエリオブジェクトとして渡す
-    router.push({
-      pathname: '/products',
-      query: {
-        keyword: keyword || undefined,
-        modelNumber: modelNumber || undefined
+  const handleSearch = async () => {
+    try {
+      const params = new URLSearchParams();
+      
+      if (typeof keyword === 'string' && keyword) {
+        params.append('keyword', keyword);
       }
-    });
+      if (typeof modelNumber === 'string' && modelNumber) {
+        params.append('modelNumber', modelNumber);
+      }
+
+      // デバッグログ
+      console.log('Search params:', {
+        params: params.toString(),
+        entries: Array.from(params.entries()),
+        query: {
+          keyword: keyword || undefined,
+          modelNumber: modelNumber || undefined
+        }
+      });
+
+      await router.push({
+        pathname: '/products',
+        query: {
+          keyword: keyword || undefined,
+          modelNumber: modelNumber || undefined
+        }
+      });
+    } catch (error) {
+      console.error('Navigation error:', error);
+      // エラー処理を追加することも可能
+    }
   };
 
   return (
-    <button 
-      className="search-button"
+    <StyledButton
+      variant="contained"
+      color="primary"
       onClick={handleSearch}
+      disabled={disabled}
+      size={size}
+      startIcon={<SearchIcon />}
+      sx={{
+        minWidth: '70px',
+        px: 2  // パディングを調整
+      }}
     >
       検索
-    </button>
+    </StyledButton>
   );
 };

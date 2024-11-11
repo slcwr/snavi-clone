@@ -1,31 +1,55 @@
 // components/atoms/Button/index.tsx
-import styles from './Button.module.scss';
+import { Button as MuiButton } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 interface ButtonProps {
-    children: React.ReactNode;
-    variant?: 'primary' | 'outline';
-    fullWidth?: boolean;
-    onClick?: () => void;
-  }
-  
+  children: React.ReactNode;
+  variant?: 'contained' | 'outlined' | 'text';
+  color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+  fullWidth?: boolean;
+  onClick?: () => void;
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+}
 
-  // デフォルトエクスポートに変更
+// スタイルのカスタマイズ（オプション）
+const StyledButton = styled(MuiButton)(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
+  textTransform: 'none', // 大文字変換を無効化
+  padding: theme.spacing(1, 3),
+  '&.MuiButton-containedPrimary': {
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
+  },
+}));
+
 export default function Button({
   children,
-  variant = 'primary',
-  fullWidth,
-  onClick
+  variant = 'contained',
+  color = 'primary',
+  fullWidth = false,
+  size = 'medium',
+  disabled = false,
+  onClick,
+  startIcon,
+  endIcon,
 }: ButtonProps) {
   return (
-    <button
-      className={`
-        px-4 py-2 rounded
-        ${variant === 'primary' ? 'bg-blue-600 text-white' : 'border border-blue-600 text-blue-600'}
-        ${fullWidth ? 'w-full' : ''}
-      `}
+    <StyledButton
+      variant={variant}
+      color={color}
+      fullWidth={fullWidth}
+      size={size}
+      disabled={disabled}
       onClick={onClick}
+      startIcon={startIcon}
+      endIcon={endIcon}
     >
       {children}
-    </button>
+    </StyledButton>
   );
-};
+}
