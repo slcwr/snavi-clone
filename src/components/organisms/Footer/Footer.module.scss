@@ -52,7 +52,7 @@
         padding-left: 16px;
   
         li {
-          font-size: 14px;
+          font-size: 10px;
           margin-bottom: 6px;
           position: relative;
   
@@ -66,14 +66,14 @@
     }
   
     &__tel {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       margin-top: 16px;
     }
   
     &__hours {
       display: block;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: normal;
       color: #666;
       margin-top: 4px;
@@ -84,7 +84,7 @@
         align-items: center;
         padding-top: 16px;
         border-top: 1px solid #eee;
-        font-size: 12px;
+        font-size: 16px;
         color: #666;
         flex-direction: column;  // 縦方向に配置
         align-items: center;     // 中央寄せ

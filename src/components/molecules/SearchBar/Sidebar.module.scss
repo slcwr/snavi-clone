@@ -9,12 +9,14 @@
       background-color: #f0f8ff;
       border-radius: 4px;
       margin-bottom: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     &__nav2 {
         background-color: #F2E6CE;
         border-radius: 4px;
         margin-bottom: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
 
   
@@ -110,7 +112,7 @@
     &__filterLabel {
       padding-left: 20px;  // 左側にインデント
       list-style: none;
-      font-size: 12px;
+      font-size: 16px;
       color: #666;
       margin-bottom: 16px;
     }
