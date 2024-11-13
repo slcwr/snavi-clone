@@ -2,6 +2,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../../styles/pages/products/ProductList.module.scss';
+import { KeywordSearch } from '../../components/molecules/SearchForm/KeywordSearch';
+import Button from '../../components/atoms/Button';
+import { Box, Stack } from '@mui/material'; 
+
 
 interface Product {
   id: string;
@@ -57,7 +61,16 @@ export default function ProductList() {
 
   return (
     <div className={styles['product-list']}>
+      <h2>ソフトウェア製品検索</h2>
+      <p>製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。</p><br/>
+      <KeywordSearch /><br/>
       <h2>検索結果</h2>
+      <Stack 
+        direction="row" 
+        justifyContent="flex-start"
+        alignItems="center"
+        spacing={1}
+      >
       <div className={styles['product-list__product-grid']}>
         {products.map((product) => (
           <div key={product.id} className={styles['product-card']}>
@@ -66,7 +79,18 @@ export default function ProductList() {
             <p>価格: ¥{product.price.toLocaleString()}</p>
           </div>
         ))}
+        </div>
+      <Button 
+        variant="contained"
+        color="primary"
+        onClick={() => console.log('clicked')}
+      >
+        型番指定見積
+      </Button>
+      
+      </Stack>
+
       </div>
-    </div>
+   
   );
 }
