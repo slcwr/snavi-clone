@@ -1,6 +1,6 @@
 //src/service/ProductService.ts
 import { ExpressDataSource } from '../db/express-data-source';
-import { Product } from '../db/entities/Product';
+import { GenerateProduct } from '../db/entities/GenerateProduct';
 
 interface SearchParams {
   keyword?: string;
@@ -22,7 +22,7 @@ private async initialize() {
     if (!ExpressDataSource.isInitialized) {
       await ExpressDataSource.initialize();
     }
-    this.productRepository = ExpressDataSource.getRepository(Product);
+    this.productRepository = ExpressDataSource.getRepository(GenerateProduct);
   } catch (error) {
     console.error('Failed to initialize ProductService:', error);
     throw error;

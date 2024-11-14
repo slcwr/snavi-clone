@@ -1,22 +1,28 @@
-// pages/products/index.tsx
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../../styles/pages/products/ProductList.module.scss';
 import { KeywordSearch } from '../../components/molecules/SearchForm/KeywordSearch';
 import Button from '../../components/atoms/Button';
-import { Box, Stack } from '@mui/material'; 
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Paper 
+} from '@mui/material';
 
-
-interface Product {
+interface GenerateProduct {
   id: string;
   productno: string;
   productname: string;
-  price: number;
+  description: string;
 }
 
 export default function ProductList() {
   const router = useRouter();
-  const [products, setProducts] = useState<Product[]>([]);
+  const [generateproducts, setGenerateProducts] = useState<GenerateProduct[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { keyword, modelNumber } = router.query;
@@ -42,7 +48,7 @@ export default function ProductList() {
         console.log('Received data:', data);
 
         const productArray = Array.isArray(data) ? data : data.products || [];
-        setProducts(productArray);
+        setGenerateProducts(productArray);
       } catch (error) {
         console.error('製品の取得に失敗しました:', error);
         setError('製品の取得に失敗しました');
@@ -62,35 +68,71 @@ export default function ProductList() {
   return (
     <div className={styles['product-list']}>
       <h2>ソフトウェア製品検索</h2>
-      <p>製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。</p><br/>
-      <KeywordSearch /><br/>
+      <p>製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。</p>
+      <br/>
+      <KeywordSearch />
+      <br/>
       <h2>検索結果</h2>
-      <Stack 
-        direction="row" 
-        justifyContent="flex-start"
-        alignItems="center"
-        spacing={1}
-      >
-      <div className={styles['product-list__product-grid']}>
-        {products.map((product) => (
-          <div key={product.id} className={styles['product-card']}>
-            <h3>{product.productname}</h3>
-            <p>製品番号: {product.productno}</p>
-            <p>価格: ¥{product.price.toLocaleString()}</p>
-          </div>
-        ))}
-        </div>
-      <Button 
-        variant="contained"
-        color="primary"
-        onClick={() => console.log('clicked')}
-      >
-        型番指定見積
-      </Button>
       
-      </Stack>
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
+      <Table 
+    sx={{ 
+      minWidth: 650,
+      border: '1px solid rgba(224, 224, 224, 1)',
+      '& .MuiTableCell-root': {
+        borderLeft: '1px solid rgba(224, 224, 224, 1)',
+        borderRight: '1px solid rgba(224, 224, 224, 1)',
+      },
+      // 最後の行のスタイルを修正
+      '& .MuiTableBody-root .MuiTableRow-root:last-child': {
+        '& .MuiTableCell-root': {
+          borderBottom: '1px solid rgba(224, 224, 224, 1)', // 最後の行の下線を追加
+        }
+      }
+    }} 
+    aria-label="product table"
+  >
+          <TableHead>
+            <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+              <TableCell sx={{ fontWeight: 'bold' }}>製品名</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>概要</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }} align="center">操作</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {generateproducts.map((generateproduct) => (
+              <TableRow
+                key={generateproduct.id}
+                sx={{ 
+                  '&:hover': { backgroundColor: '#f8f8f8' },
+                }}
+              >
+                <TableCell>{generateproduct.productname}</TableCell>
+                <TableCell>{generateproduct.description}</TableCell>
+              
+                
+                <TableCell align="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() => console.log('clicked', generateproduct.id)}
+                    //sx={{ minWidth: '120px' }}
+                  >
+                    構成作成
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-      </div>
-   
+      {generateproducts.length === 0 && (
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+          検索結果がありません
+        </div>
+      )}
+    </div>
   );
 }

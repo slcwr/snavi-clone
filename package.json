@@ -55,10 +55,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typeorm": "typeorm-ts-node-commonjs",
+    "db:drop": "npm run typeorm schema:drop",
+    "db:migrate": "npm run typeorm migration:run",
     "migration:generate": "npm run typeorm migration:generate -- -d ./src/db/express-data-source.ts",
     "migration:create": "npm run typeorm migration:create",
     "migration:run": "npm run typeorm migration:run -- -d ./src/db/express-data-source.ts",
     "seed": "ts-node src/db/seeds/run-seed.ts",
+    "seed:refresh": "npm run db:drop && npm run db:migrate && npm run seed",
     "migration:revert": "npm run typeorm migration:revert -- -d ./src/db/express-data-source.ts",
     "migration:show": "npm run typeorm migration:show -- -d ./src/db/express-data-source.ts"
   }
