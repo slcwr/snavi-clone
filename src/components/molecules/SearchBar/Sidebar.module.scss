@@ -3,16 +3,11 @@
 
 
 .sidebar {
-    width: 240px;
+    width: 100%;
     flex-shrink: 0;
     top: 0px;
     position: sticky;
     height: 100vh;
-
-    @include tab {
-      position: static;
-      height: auto;
-    }
   
     &__nav {
       background-color: #f0f8ff;
