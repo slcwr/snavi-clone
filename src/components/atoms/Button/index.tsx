@@ -3,6 +3,7 @@ import { Button as MuiButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 interface ButtonProps {
+  width?: string;
   children: React.ReactNode;
   variant?: 'contained' | 'outlined' | 'text';
   color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
@@ -28,6 +29,7 @@ const StyledButton = styled(MuiButton)(({ theme }) => ({
 }));
 
 export default function Button({
+  width,
   children,
   variant = 'contained',
   color = 'primary',
@@ -40,6 +42,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <StyledButton
+      style={{ width: width }}
       variant={variant}
       color={color}
       fullWidth={fullWidth}

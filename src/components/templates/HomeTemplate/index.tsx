@@ -1,8 +1,6 @@
 // components/templates/HomeTemplate/index.tsx
 import { Header } from '../../../components/organisms/Header';
 import { Footer } from '../../../components/organisms/Footer';
-//import { SearchSection } from '../../../components/organisms/SerchSection';
-//import { ProductList } from '../../../components/organisms/ProductList';
 import { Sidebar } from '../../molecules/SearchBar';
 import { ProductSearch } from '../../organisms/ProductSearch';
 import { ConfigurationSearch } from '../../molecules/SearchForm/ConfigurationSearch';
