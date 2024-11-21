@@ -11,6 +11,9 @@
       max-width: 100%;
       margin: 0;
       padding: 0;
+      margin-top: auto; // 下部に配置
+      position: sticky; // フッターを固定[2]
+      bottom: 0; // 下部に固定[2]
       @include tab {
         width: 100vw; // ビューポート幅いっぱいに
         min-width: 100vw;
