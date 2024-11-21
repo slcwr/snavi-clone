@@ -17,7 +17,7 @@ export const ProductSearch = () => (
     </div>
     <div className={styles['product-search-section']}>
       <h3>ソフトウェア製品検索</h3>
-      <p>製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。</p><br/>
+      <p>製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。(例)型番:A-01 (入力なしの場合は全件検索します)</p><br/>
       <KeywordSearch />
     </div>
   </div>
