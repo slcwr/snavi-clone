@@ -12,8 +12,9 @@ const Footer_1 = require("../../../components/organisms/Footer");
 const SearchBar_1 = require("../../molecules/SearchBar");
 const ProductSearch_1 = require("../../organisms/ProductSearch");
 const ConfigurationSearch_1 = require("../../molecules/SearchForm/ConfigurationSearch");
-// components/templates/HomeTemplate/index.tsx
 const HomeTemplate_module_scss_1 = __importDefault(require("./HomeTemplate.module.scss"));
+
+
 const HomeTemplate = ({ products }) => {
     return (<div className={HomeTemplate_module_scss_1.default['home-template']}>
       <Header_1.Header />

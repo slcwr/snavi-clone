@@ -1,25 +1,33 @@
 // components/templates/Layout/Layout.module.scss
+@use '@/styles/mixins' as *;
+
 .container {
-    display: flex;
-    flex-direction: column; // スマホ表示ではcolumn
-    width: 100%;
-    min-height: 100vh;
-    
-    @media screen and (min-width: 768px) {
-      flex-direction: row; // PC表示ではrow
-    }
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: row; // デフォルトでPC表示
+
+  @include tab {
+    flex-direction: column; // タブレット以下でcolumn
   }
-  
-  .main {
-    flex: 1;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+}
+
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+
+  @include tab {
     width: 100%;
+    min-width: 100%;
+    order: 2; // メインコンテンツの下に配置
   }
-  
-  .sidebar {
-    width: 100%;
-    
-    @media screen and (min-width: 768px) {
-      width: 240px; // PC表示時のサイドバーの幅
-      min-width: 240px; // 縮まないように設定
-    }
+
+  @include sp {
+    padding: 0 20px;
   }
+}

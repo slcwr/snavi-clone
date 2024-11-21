@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 .main-content {
   display: flex;
   gap: 24px;
@@ -5,13 +7,28 @@
   &__sidebar {
     width: 15%;
     border-radius: 4px;
-    margin-top: -90px; // サイドバーの開始位置を下げる
+    margin-top: -30px; // サイドバーの開始位置を下げる
+
+    @include tab {
+      width: 100%;
+      min-width: 100%;
+      order: 2; // スマホ表示時に下部に配置
+    }
   }
 
   &__content {
     width: 85%;
     padding-left: 1.5rem;
+    @include tab {
+      order: 1; // スマホ表示時に上部に配置
+    }
+
   }
+   
+  @include tab {
+    flex-direction: column;
+  }
+
   &__container {
     width: 100%; 
    @media screen and (max-width: 767px) {
