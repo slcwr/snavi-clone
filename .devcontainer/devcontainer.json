@@ -5,6 +5,7 @@
 	],
 	"service": "app",
 	"workspaceFolder": "/app",
-	"remoteUser": "node"
+	"remoteUser": "node",
+    "forwardPorts": [3001]
   }
 

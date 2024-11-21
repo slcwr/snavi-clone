@@ -2,8 +2,13 @@
 import { FC, useState } from 'react';
 import { ModalContent } from './ModalContent'
 import styles from './Sidebar.module.scss';
+type Props = {
+  className?: string;
+  // その他のprops
+};
 
-export const Sidebar: FC = () => {
+
+export const Sidebar: FC<Props> = ({ className, ...props }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filteredOS, setFilteredOS] = useState<string[]>([]);
     const [filteredModels, setFilteredModels] = useState<string[]>([]);
@@ -25,6 +30,7 @@ export const Sidebar: FC = () => {
     }
 
   return (
+    <div className={className} {...props}>
     <aside className={styles.sidebar}>
       {/* 製品情報・見積り */}
       <nav className={styles.sidebar__nav}>
@@ -80,6 +86,6 @@ export const Sidebar: FC = () => {
         </div>
         </nav>
     </aside>
-    
+    </div>
   );
 };
