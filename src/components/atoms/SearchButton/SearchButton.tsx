@@ -60,7 +60,7 @@ export const SearchButton = ({
       });
     } catch (error) {
       console.error('Navigation error:', error);
-      // エラー処理を追加することも可能
+      
     }
   };
 

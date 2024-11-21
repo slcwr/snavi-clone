@@ -1,4 +1,5 @@
 export const SearchTypeList = () => (
+
     <div className="search-type-list">
       <div className="search-type-item">
         <a href="#">製品名から探す</a>
@@ -9,5 +10,5 @@ export const SearchTypeList = () => (
         <span>・・・複数型番から価格や保守料等を一括検索</span><br/>
       </div>
       {/* 他の検索オプション */}
-    </div>
+    </div> 
   );

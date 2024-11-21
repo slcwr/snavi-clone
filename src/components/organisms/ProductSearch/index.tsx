@@ -6,6 +6,7 @@ import { KeywordSearch } from '../../molecules/SearchForm/KeywordSearch';
 
 
 export const ProductSearch = () => (
+  
   <div className={styles['product-search']}>
     <SectionTitle>製品情報・見積り</SectionTitle>
     <div className={styles['product-search__description']}>
@@ -21,4 +22,5 @@ export const ProductSearch = () => (
       <KeywordSearch />
     </div>
   </div>
+  
 );

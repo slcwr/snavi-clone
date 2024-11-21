@@ -1,7 +1,10 @@
 // components/organisms/Sidebar/index.tsx
 import { FC, useState } from 'react';
 import { ModalContent } from './ModalContent'
+import { useRouter } from 'next/router';
 import styles from './Sidebar.module.scss';
+
+
 type Props = {
   className?: string;
   // その他のprops
@@ -9,6 +12,7 @@ type Props = {
 
 
 export const Sidebar: FC<Props> = ({ className, ...props }) => {
+    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filteredOS, setFilteredOS] = useState<string[]>([]);
     const [filteredModels, setFilteredModels] = useState<string[]>([]);
@@ -21,6 +25,19 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
     const handleCloseModal = () => {
       setIsModalOpen(false);
     };
+
+    const handleSearch = async () => {
+    try {
+      const params = new URLSearchParams();
+      
+      await router.push({
+        pathname: '/products',
+      });
+    } catch (error) {
+      console.error('Navigation error:', error);
+      
+    }
+  };
 
 
     const handleFilter = (selectedOS: string[], selectedModels: string[]) => {
@@ -35,11 +52,17 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
       {/* 製品情報・見積り */}
       <nav className={styles.sidebar__nav}>
       <li className={styles.sidebar__menuItem}>
-            <a href="#" className={styles.sidebar__linkhead}>製品情報・見積り</a>
+      <a href="#" className={styles.sidebar__linkhead}>製品情報・見積り</a>
      </li>
         <ul className={styles.sidebar__menu}>
           <li className={styles.sidebar__menuItem}>
-            <a href="#" className={styles.sidebar__link}>製品・キーワード検索</a>
+          <a 
+           href="#" 
+           onClick={(e) => {
+           e.preventDefault();
+           handleSearch();  // 関数を実行する
+           }} 
+           className={styles.sidebar__link}>製品・キーワード検索</a>
           </li>
           <li className={styles.sidebar__menuItem}>
             <a href="#" className={styles.sidebar__link}>カテゴリから</a>
