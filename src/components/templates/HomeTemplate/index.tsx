@@ -43,9 +43,8 @@ export const HomeTemplate = ({ products }: any) => {
           </div>
           <div className={styles['main-content__content']}>
             <ProductSearch />
-            
           </div>
-        </div>
+        </div>        
       </main>
       <Footer />
     </div>

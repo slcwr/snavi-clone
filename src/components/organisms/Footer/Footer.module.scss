@@ -1,15 +1,24 @@
 // components/organisms/Footer/Footer.module.scss
+@use '../../../styles/mixins' as *;
 .footer {
     line-height: 0.9;
     background-color: #fff;
-    padding: 40px 0;
-    width: calc(100% - 240px); // サイドバーの幅とギャップを引く
+    padding: 0;
+    width: 100%; // サイドバーの幅とギャップを引く
     margin-left: auto; 
   
     &__container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      @include tab {
+        width: 100vw; // ビューポート幅いっぱいに
+        min-width: 100vw;
+        margin-left: calc(-50vw + 50%); // ネガティブマージンで全幅に
+        margin-right: calc(-50vw + 50%);
+        order: 2;
+        padding: 20px; // 内側の余白
+      }
     }
   
     &__info {
