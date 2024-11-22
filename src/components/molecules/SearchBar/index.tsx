@@ -39,6 +39,19 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
     }
   };
 
+  const handleCategorySearch = async () => {
+    try {
+      const params = new URLSearchParams();
+      
+      await router.push({
+        pathname: '/products',
+      });
+    } catch (error) {
+      console.error('Navigation error:', error);
+      
+    }
+  };
+
 
     const handleFilter = (selectedOS: string[], selectedModels: string[]) => {
       console.log('Selected OS:', selectedOS);
@@ -60,12 +73,18 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
            href="#" 
            onClick={(e) => {
            e.preventDefault();
-           handleSearch();  // 関数を実行する
+           handleSearch();  
            }} 
            className={styles.sidebar__link}>製品・キーワード検索</a>
           </li>
           <li className={styles.sidebar__menuItem}>
-            <a href="#" className={styles.sidebar__link}>カテゴリから</a>
+          <a 
+           href="#" 
+           onClick={(e) => {
+           e.preventDefault();
+           handleCategorySearch();  
+           }} 
+           className={styles.sidebar__link}>カテゴリから</a>
           </li>
           <li className={styles.sidebar__menuItem}>
             <a href="#" className={styles.sidebar__link}>型番一括検索</a>

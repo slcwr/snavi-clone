@@ -5,6 +5,7 @@ import { GenerateProduct } from '../db/entities/GenerateProduct';
 interface SearchParams {
   keyword?: string;
   modelNumber?: string;
+  modelName?: string;
 }
 
 export class ProductService {
@@ -29,24 +30,17 @@ private async initialize() {
   }
 }
 
-  // constructor() {
-  //   // データソースの初期化確認
-  //   if (!AppDataSource.isInitialized) {
-  //     await AppDataSource.initialize();
-  //   }
-  //   this.productRepository = AppDataSource.getRepository(Product);
-  // }
-
   async searchProducts(params: SearchParams) {
-    const { keyword, modelNumber } = params;
+    const { keyword, modelNumber, modelName } = params;
     const queryBuilder = this.productRepository.createQueryBuilder('product');
 
-    if (keyword && modelNumber) {
+    if (keyword && modelNumber && modelName) {
       queryBuilder.where(
-        '(product.productname ILIKE :keyword OR product.productno = :modelNumber)',
+        '(product.productname ILIKE :keyword OR product.productno = :modelNumber OR product.productname = :modelName)',
         {
           keyword: `%${keyword}%`,
-          modelNumber
+          modelNumber,
+          modelName: `%${modelName}%`
         }
       );
     } else if (keyword) {
@@ -56,6 +50,10 @@ private async initialize() {
     } else if (modelNumber) {
       queryBuilder.where('product.productno ILIKE :modelNumber', {
         modelNumber
+      });
+    } else if (modelName) {
+      queryBuilder.where('product.productname ILIKE :modelName', {
+        modelName: `%${modelName}%`
       });
     }
 

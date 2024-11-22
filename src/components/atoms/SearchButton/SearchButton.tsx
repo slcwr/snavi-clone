@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles';
 interface SearchButtonProps {
   keyword?: string;
   modelNumber?: string;
+  modelName?: string;
   disabled?: boolean;
   size?: 'small' | 'medium' | 'large';
 }
@@ -25,6 +26,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 export const SearchButton = ({ 
   keyword, 
   modelNumber,
+  modelName,
   disabled = false,
   size = 'small'
 }: SearchButtonProps) => {
@@ -40,6 +42,9 @@ export const SearchButton = ({
       if (typeof modelNumber === 'string' && modelNumber) {
         params.append('modelNumber', modelNumber);
       }
+      if (typeof modelName === 'string' && modelName) {
+        params.append('modelName', modelName);
+      }
 
       // デバッグログ
       console.log('Search params:', {
@@ -47,7 +52,8 @@ export const SearchButton = ({
         entries: Array.from(params.entries()),
         query: {
           keyword: keyword || undefined,
-          modelNumber: modelNumber || undefined
+          modelNumber: modelNumber || undefined,
+          modelName: modelName || undefined
         }
       });
 
@@ -55,7 +61,8 @@ export const SearchButton = ({
         pathname: '/products',
         query: {
           keyword: keyword || undefined,
-          modelNumber: modelNumber || undefined
+          modelNumber: modelNumber || undefined,
+          modelName: modelName || undefined
         }
       });
     } catch (error) {

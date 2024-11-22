@@ -11,10 +11,11 @@ export class ProductController {
 
   searchProducts = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { keyword, modelNumber } = req.query;
+      const { keyword, modelNumber, modelName } = req.query;
       const products = await this.productService.searchProducts({
         keyword: String(keyword || ''),
-        modelNumber: String(modelNumber || '')
+        modelNumber: String(modelNumber || ''),
+        modelName: String(modelName || '')
       });
       
       res.json(products);

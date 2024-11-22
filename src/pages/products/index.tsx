@@ -25,7 +25,7 @@ export default function ProductList() {
   const [generateproducts, setGenerateProducts] = useState<GenerateProduct[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { keyword, modelNumber } = router.query;
+  const { keyword, modelNumber,modelName } = router.query;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,6 +36,7 @@ export default function ProductList() {
         const params = new URLSearchParams();
         if (keyword) params.append('keyword', String(keyword));
         if (modelNumber) params.append('modelNumber', String(modelNumber));
+        if (modelName) params.append('modelName', String(modelName));
 
         // Express APIのエンドポイントを呼び出し
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products?${params.toString()}`);
@@ -60,7 +61,7 @@ export default function ProductList() {
     if (router.isReady) {
       fetchProducts();
     }
-  }, [router.isReady, keyword, modelNumber]);
+  }, [router.isReady, keyword, modelNumber, modelName ]);
 
   if (loading) return <div>読み込み中...</div>;
   if (error) return <div>エラー: {error}</div>;

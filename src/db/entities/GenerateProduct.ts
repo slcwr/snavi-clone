@@ -1,4 +1,4 @@
- // db/entities/Product.ts
+ // db/entities/GenerateProduct.ts
 import { Entity, Column, PrimaryGeneratedColumn,CreateDateColumn, 
   UpdateDateColumn } from 'typeorm';
 
