@@ -30,14 +30,7 @@ export default function ProductList() {
   if (error) return <div>エラー: {error}</div>;
 
   return (
-    
-    <div className={styles['product-list']}>
-      <div>
-        {currentItems.map(item => (
-          <ProductItem key={item.id} product={item} />
-        ))}
-      </div>
-
+   <div>
       <h2>ソフトウェア製品検索</h2>
       <p>製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。</p>
       <br/>
@@ -71,7 +64,7 @@ export default function ProductList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((product) => (
+            {currentItems.map((product) => (
               <TableRow
                 key={product.id}
                 sx={{ 
