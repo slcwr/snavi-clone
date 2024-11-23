@@ -34,7 +34,37 @@ export class InitialDataSeeder implements Seeder {
       {
         productno: "A-05",
         productname: "製品E",
-        description: "統合運用管理製品",
+        description: "OLF/TP,DataAccess/Serverを介してACOSとオープンサーバのリアルタイム連携を実現するための、Java2ランタイムライブラリ",
+      },
+      {
+        productno: "A-06",
+        productname: "製品F",
+        description: "i-PX7300／i-PX7300V／i-PX7300EX／i-PX7300Wで動作するメインフレームコンピュータ用のOSです。",
+      },
+      {
+        productno: "A-07",
+        productname: "製品G",
+        description: "AddPointシリーズは、迷惑メール、スパムメール、情報漏えい、私用メールなど、電子メールの利用に潜む課題を解決し、電子メール利用における脅威から企業を守るメールセキュリティ・アプライアンスです。",
+      },
+      {
+        productno: "A-08",
+        productname: "製品H",
+        description: "Windowsサーバ上でPrintPort for ACOS-4用の帳票を新規作成・メンテナンスする帳票作成ツールです。",
+      },
+      {
+        productno: "A-09",
+        productname: "製品I",
+        description: "業務特性や運用スケジュールに応じて、CPUリソースの配分が設計でき、高負荷時も基幹業務の安定したレスポンスが確保できます。",
+      },
+      {
+        productno: "A-10",
+        productname: "製品J",
+        description: "NEC製 新プロセッサ「NOAH-6」を搭載したACOSシリーズ「i-PX9800」で動作するOSです。 ACOS-4/XAでは、通信処理速度の向上や、オープンシステムとの親和性の強化、災害対策の強化などを実施しています。",
+      },
+      {
+        productno: "A-11",
+        productname: "製品K",
+        description: "ACOS-4/XSはACOSシリーズ「i-PX9800」で動作するOSです。基幹システムを支えるための着実な進化、SoE領域との連携を強化などを実施しています。",
       },
     ];
 

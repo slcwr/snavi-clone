@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../../styles/pages/products/ProductList.module.scss';
-import { KeywordSearch } from '../../components/molecules/SearchForm/KeywordSearch';
+import { CategorySearch } from '../../components/molecules/SearchForm/CategorySearch';
+import { usePagination } from '../../hooks/usePagination';
 import Button from '../../components/atoms/Button';
+import { useProducts } from '../../hooks/useProducts';
+
 import { 
   Table, 
   TableBody, 
@@ -13,65 +16,32 @@ import {
   Paper 
 } from '@mui/material';
 
-interface GenerateProduct {
-  id: string;
-  productno: string;
-  productname: string;
-  description: string;
-}
-
 export default function ProductList() {
-  const router = useRouter();
-  const [generateproducts, setGenerateProducts] = useState<GenerateProduct[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const { keyword, modelNumber,modelName } = router.query;
+  const { data, loading, error } = useProducts();
+  const pagination = usePagination({
+    totalItems: data.length,
+    itemsPerPage: 3
+  });
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      setError(null);
-      
-      try {
-        const params = new URLSearchParams();
-        if (keyword) params.append('keyword', String(keyword));
-        if (modelNumber) params.append('modelNumber', String(modelNumber));
-        if (modelName) params.append('modelName', String(modelName));
+  const currentItems = data.slice(pagination.startIndex, pagination.endIndex);
 
-        // Express APIのエンドポイントを呼び出し
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products?${params.toString()}`);
-        
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Received data:', data);
-
-        const productArray = Array.isArray(data) ? data : data.products || [];
-        setGenerateProducts(productArray);
-      } catch (error) {
-        console.error('製品の取得に失敗しました:', error);
-        setError('製品の取得に失敗しました');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (router.isReady) {
-      fetchProducts();
-    }
-  }, [router.isReady, keyword, modelNumber, modelName ]);
 
   if (loading) return <div>読み込み中...</div>;
   if (error) return <div>エラー: {error}</div>;
 
   return (
+    
     <div className={styles['product-list']}>
+      <div>
+        {currentItems.map(item => (
+          <ProductItem key={item.id} product={item} />
+        ))}
+      </div>
+
       <h2>ソフトウェア製品検索</h2>
       <p>製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。</p>
       <br/>
-      <KeywordSearch />
+      <CategorySearch />
       <br/>
       <h2>検索結果</h2>
       
@@ -101,15 +71,15 @@ export default function ProductList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {generateproducts.map((generateproduct) => (
+            {data.map((product) => (
               <TableRow
-                key={generateproduct.id}
+                key={product.id}
                 sx={{ 
                   '&:hover': { backgroundColor: '#f8f8f8' },
                 }}
               >
-                <TableCell>{generateproduct.productname}</TableCell>
-                <TableCell>{generateproduct.description}</TableCell>
+                <TableCell>{product.productname}</TableCell>
+                <TableCell>{product.description}</TableCell>
               
                 
                 <TableCell align="center">
@@ -117,7 +87,7 @@ export default function ProductList() {
                     variant="contained"
                     color="primary"
                     size="small"
-                    onClick={() => console.log('clicked', generateproduct.id)}
+                    onClick={() => console.log('clicked', product.id)}
                     //sx={{ minWidth: '120px' }}
                   >
                     構成作成
@@ -129,11 +99,29 @@ export default function ProductList() {
         </Table>
       </TableContainer>
 
-      {generateproducts.length === 0 && (
+      {data.length === 0 && (
         <div style={{ textAlign: 'center', padding: '20px' }}>
           検索結果がありません
         </div>
       )}
+
+     <div>
+        <button 
+          onClick={pagination.previousPage}
+          disabled={!pagination.hasPreviousPage}
+        >
+          前へ
+        </button>
+        <span>
+          {pagination.currentPage} / {pagination.totalPages}
+        </span>
+        <button 
+          onClick={pagination.nextPage}
+          disabled={!pagination.hasNextPage}
+        >
+          次へ
+        </button>
+        </div>
     </div>
   );
 }
