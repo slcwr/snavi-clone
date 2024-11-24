@@ -23,6 +23,13 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
 
+      &__nav3 {
+        background-color: #f1d3de;
+        border-radius: 4px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
   
     &__menu {
       list-style: none;
@@ -63,6 +70,18 @@
         border-radius: 4px;
         transition: background-color 0.2s;
       }
+      &__linkhead3 {
+        line-height: 0.9;
+        background-color: #e57171;
+        display: block;
+        padding: 8px 12px;
+        color: #333;
+        font-weight: bolder;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+
   
     &__link {
       line-height: 0.9;
@@ -95,6 +114,23 @@
 
         &:hover {
             background-color: #F8F2E5;
+          }
+      }
+
+      &__link3 {
+        line-height: 0.9;
+        font-size: 16px;
+        list-style: none;
+        display: block;
+        padding: 8px 12px;
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+        margin-bottom: 12px;
+
+        &:hover {
+            background-color: #fceef4;
           }
       }
 

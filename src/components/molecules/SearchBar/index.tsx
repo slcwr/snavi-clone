@@ -114,6 +114,7 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
           </div>
         </div>
 
+
         <ModalContent 
           isOpen={isModalOpen}
           onClose={handleCloseModal}
@@ -127,6 +128,36 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
           </label>
         </div>
         </nav>
+
+           {/* 管理者メニュー */}
+      <nav className={styles.sidebar__nav3}>
+      <li className={styles.sidebar__menuItem}>
+      <a href="#" className={styles.sidebar__linkhead3}>管理者メニュー</a>
+     </li>
+        <ul className={styles.sidebar__menu}>
+          <li className={styles.sidebar__menuItem}>
+          <a 
+           href="#" 
+           onClick={(e) => {
+           e.preventDefault();
+           handleSearch();  
+           }} 
+           className={styles.sidebar__link3}>製品管理</a>
+          </li>
+          <li className={styles.sidebar__menuItem}>
+          <a 
+           href="#" 
+           onClick={(e) => {
+           e.preventDefault();
+           handleCategorySearch();  
+           }} 
+           className={styles.sidebar__link3}>ユーザー管理</a>
+          </li>
+          <li className={styles.sidebar__menuItem}>
+            <a href="#" className={styles.sidebar__link3}>システム管理</a>
+          </li>
+        </ul>
+      </nav>
     </aside>
     </div>
   );

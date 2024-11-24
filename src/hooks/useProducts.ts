@@ -38,7 +38,6 @@ export const useProducts = () => {
         console.log('Received data:', data);
         console.log('data.length:',data.length)
 
-
         const productArray = Array.isArray(data) ? data : data.products || [];
         setGenerateProducts(productArray);
       } catch (error) {
