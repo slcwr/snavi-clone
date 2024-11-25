@@ -25,8 +25,22 @@ export const useDeleteProduct = (
 
     try {
       const response = await fetch(
-         `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?${productToDelete.toString()}`
+         `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?id=${productToDelete}`, 
+         {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
+
+      if (!response.ok) {
+        throw new Error('削除に失敗しました');
+      }
+
+      // レスポンスの確認
+      const result = await response.json();
+      
 
       if (!response.ok) {
         throw new Error('削除に失敗しました');

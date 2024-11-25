@@ -25,9 +25,14 @@ export class ProductController {
 
         case 'DELETE':
           const { id } = req.query;
+          if (!id || typeof id !== 'string') {
+            res.status(400).json({ error: 'Valid ID is required for deletion' });
+            return;
+          }
           const result = await this.productService.deleteProducts({
-            id: String(id || '')
+            id: id
           });
+
           res.json(result);
           break;
 
