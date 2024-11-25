@@ -1,6 +1,7 @@
 //src/service/ProductService.ts
 import { ExpressDataSource } from '../db/express-data-source';
 import { GenerateProduct } from '../db/entities/GenerateProduct';
+import { Repository } from 'typeorm';
 
 interface SearchParams {
   keyword?: string;
@@ -8,9 +9,12 @@ interface SearchParams {
   modelName?: string;
 }
 
+interface DeleteParam {
+  id: string;
+}
+
 export class ProductService {
-  private productRepository: any;
-  private initialized = false;
+  private productRepository: Repository<GenerateProduct>;
 
   constructor() {
     this.initialize().catch(error => {
@@ -58,5 +62,27 @@ private async initialize() {
     }
 
     return await queryBuilder.getMany();
+  }
+
+  async deleteProducts(params: DeleteParam) {
+    await this.ensureInitialized();
+    const { id } = params;
+
+    if (!id) {
+      throw new Error('ID is required for deletion');
+    }
+
+    const result = await this.productRepository.delete(id);
+    if (result.affected === 0) {
+      throw new Error('Product not found');
+    }
+    return { success: true, message: 'Product deleted successfully' };
+  }
+
+  // リポジトリの初期化を確認するヘルパーメソッド
+  private async ensureInitialized() {
+    if (!this.productRepository) {
+      await this.initialize();
+    }
   }
 }

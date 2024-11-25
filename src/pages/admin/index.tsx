@@ -86,7 +86,7 @@ export default function AdminDashboard() {
 
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          管理画面
+          製品管理
         </Typography>
 
         <TableContainer component={Paper}>

@@ -2,7 +2,7 @@ import express from 'express';
 import next from 'next';
 import cors from 'cors';
 import { ExpressDataSource } from './db/express-data-source';
-import { productRoutes } from './server/routes/productRoutes';
+import productRoutes from './server/routes/productRoutes';
 import 'reflect-metadata';
 
 const dev = process.env.NODE_ENV !== 'production';

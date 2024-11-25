@@ -9,19 +9,34 @@ export class ProductController {
     this.productService = new ProductService();
   }
 
-  searchProducts = async (req: Request, res: Response): Promise<void> => {
+  handleProduct = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { keyword, modelNumber, modelName } = req.query;
-      const products = await this.productService.searchProducts({
-        keyword: String(keyword || ''),
-        modelNumber: String(modelNumber || ''),
-        modelName: String(modelName || '')
-      });
-      
-      res.json(products);
+      // HTTPメソッドに基づいて処理を分岐
+      switch (req.method) {
+        case 'GET':
+          const { keyword, modelNumber, modelName } = req.query;
+          const products = await this.productService.searchProducts({
+            keyword: String(keyword || ''),
+            modelNumber: String(modelNumber || ''),
+            modelName: String(modelName || '')
+          });
+          res.json(products);
+          break;
+
+        case 'DELETE':
+          const { id } = req.query;
+          const result = await this.productService.deleteProducts({
+            id: String(id || '')
+          });
+          res.json(result);
+          break;
+
+        default:
+          res.status(405).json({ error: 'Method not allowed' });
+      }
     } catch (error) {
-      console.error('Search products error:', error);
-      res.status(500).json({ error: '製品の検索に失敗しました' });
+      console.error('Product operation error:', error);
+      res.status(500).json({ error: '操作に失敗しました' });
     }
   };
 }

@@ -39,6 +39,19 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
     }
   };
 
+  const handleadmin = async () => {
+    try {
+      const params = new URLSearchParams();
+      
+      await router.push({
+        pathname: '/admin',
+      });
+    } catch (error) {
+      console.error('Navigation error:', error);
+      
+    }
+  };
+
   const handleCategorySearch = async () => {
     try {
       const params = new URLSearchParams();
@@ -140,7 +153,7 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
            href="#" 
            onClick={(e) => {
            e.preventDefault();
-           handleSearch();  
+           handleadmin();  
            }} 
            className={styles.sidebar__link3}>製品管理</a>
           </li>
@@ -149,7 +162,7 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
            href="#" 
            onClick={(e) => {
            e.preventDefault();
-           handleCategorySearch();  
+           handleadmin();  
            }} 
            className={styles.sidebar__link3}>ユーザー管理</a>
           </li>
