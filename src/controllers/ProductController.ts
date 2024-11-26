@@ -24,24 +24,37 @@ export class ProductController {
           break;
 
         case 'DELETE':
-          const { id } = req.query;
-          if (!id || typeof id !== 'string') {
+          const { id } = req.params;  // req.queryではなくreq.paramsを使用
+          if (!id) {
             res.status(400).json({ error: 'Valid ID is required for deletion' });
-            return;
+          return;
           }
-          const result = await this.productService.deleteProducts({
-            id: id
-          });
-
-          res.json(result);
+          const delresult = await this.productService.deleteProducts({ id });
+          res.json(delresult);
           break;
 
-        default:
+        case 'PUT':
+          const putId = req.params.id;  // req.paramsからIDを取得
+          const updateData = req.body;
+  
+          if (!putId) {
+          res.status(400).json({ error: 'Valid ID is required for update' });
+          return;
+          }
+
+          const putresult = await this.productService.putProducts({
+            id: putId,
+            ...updateData
+          });
+          res.json(putresult);
+          break;
+
+          default:
           res.status(405).json({ error: 'Method not allowed' });
-      }
-    } catch (error) {
-      console.error('Product operation error:', error);
-      res.status(500).json({ error: '操作に失敗しました' });
-    }
-  };
+          }
+          } catch (error) {
+          console.error('Product operation error:', error);
+          res.status(500).json({ error: '操作に失敗しました' });
+        }
+    };
 }

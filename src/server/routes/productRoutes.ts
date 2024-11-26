@@ -7,7 +7,11 @@ const productController = new ProductController();
 
 // 同じエンドポイントで複数のHTTPメソッドを処理
 router.route('/products')
-  .get(productController.handleProduct)
-  .delete(productController.handleProduct);
+  .get(productController.handleProduct);
+
+
+router.route('/products/:id')  // IDを含むエンドポイントを別に定義
+  .delete(productController.handleProduct)
+  .put(productController.handleProduct);
 
 export default router;

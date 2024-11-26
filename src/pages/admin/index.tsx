@@ -1,4 +1,3 @@
-// pages/admin/index.tsx
 import { useEffect, useState } from 'react';
 import { useProducts } from '../../hooks/useProducts';
 import { useRouter } from 'next/router';
@@ -8,28 +7,20 @@ import {
     DialogTitle, 
     DialogContent, 
     DialogActions, 
-    Button 
-  } from '@mui/material';  
-
-import { 
-  Container, 
-  Paper, 
-  Typography, 
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from '@mui/material';
+    Button,
+    Container, 
+    Paper, 
+    Typography, 
+    Box
+} from '@mui/material';  
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 interface Product {
     id: string;
     productno: string;
     productname: string;
     description: string;
-  }
+}
 
 export default function AdminDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -48,26 +39,75 @@ export default function AdminDashboard() {
     }
   }, [data]);
 
-
-  const handleEdit = async (productId: string) => {
+  // 編集完了時の処理
+  const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) => {
     try {
-      // 編集ページへ遷移
-      await router.push({
-        pathname: '/admin/products/edit',
-        query: { id: productId }
+      const updateData = {
+        productno: updatedRow.productno,
+        productname: updatedRow.productname,
+        description: updatedRow.description,
+        updatedAt: new Date().toISOString() // 現在の日時を追加
+      };
+
+     
+      // APIを呼び出して更新
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${updatedRow.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateData),
       });
+      console.log('送信するデータ:', {
+        updatedRow,
+        updateData,
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${updatedRow.id}`
+      });
+
+      if (!response.ok) {
+        throw new Error('更新に失敗しました');
+      }
+
+      // 成功した場合、ローカルの状態を更新
+      // setProducts(prevProducts =>
+      //   prevProducts.map(product =>
+      //     product.id === updatedRow.id
+      //       ? { ...product, [updatedRow.field]: updatedRow.value }
+      //       : product
+      //   )
+      // );
     } catch (error) {
-      console.error('編集ページへの遷移に失敗しました:', error);
-      // エラーハンドリングの実装（例：アラート表示など）
-      alert('編集ページへの遷移に失敗しました');
+      console.error('更新エラー:', error);
+      alert('更新に失敗しました');
     }
   };
 
-
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 130, editable: false },
+    { field: 'productno', headerName: '製品番号', width: 130, editable: true },
+    { field: 'productname', headerName: '製品名', width: 200, editable: true },
+    { field: 'description', headerName: '説明', width: 300, editable: true },
+    {
+      field: 'actions',
+      headerName: '操作',
+      width: 200,
+      renderCell: (params) => (
+        <Box>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => handleDelete(params.row.id)}
+            sx={{ mr: 1 }}
+          >
+            削除
+          </Button>
+        </Box>
+      ),
+    },
+  ];
 
   return (
     <Container maxWidth="lg">
-
       <Dialog
         open={deleteDialogOpen}
         onClose={handleCloseDialog}
@@ -89,31 +129,47 @@ export default function AdminDashboard() {
           製品管理
         </Typography>
 
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>製品名</TableCell>
-                <TableCell>説明</TableCell>
-                <TableCell>操作</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell>{product.id}</TableCell>
-                  <TableCell>{product.productname}</TableCell>
-                  <TableCell>{product.description}</TableCell>
-                  <TableCell>
-                    <button onClick={() => handleEdit(product.id)}>編集</button>
-                    <button onClick={() => handleDelete(product.id)}>削除</button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <Box sx={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={products}
+          columns={columns}
+          initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5, page: 0 },
+          },
+         }}
+          pageSizeOptions={[5]}
+          processRowUpdate={async (updatedRow, originalRow) => {
+            try {
+              console.log('Updatingrow.id:', updatedRow.id); // デバッグ用
+
+              const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${updatedRow.id}`, {
+              method: 'PUT',
+              headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              productno: updatedRow.productno,
+              productname: updatedRow.productname,
+              description: updatedRow.description
+            }),
+          });
+
+          if (!response.ok) {
+          throw new Error('更新に失敗しました');
+          }
+
+          return updatedRow;
+            } catch (error) {
+          console.error('更新エラー:', error);
+          return originalRow;
+          }
+          }}
+          loading={loading}
+          disableRowSelectionOnClick
+          editMode="row"
+        />
+        </Box>
       </Box>
     </Container>
   );

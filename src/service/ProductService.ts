@@ -13,6 +13,13 @@ interface DeleteParam {
   id: string;
 }
 
+interface UpdateProductParams {
+  id: string;
+  productno?: string;
+  productname?: string;
+  description?: string;
+}
+
 export class ProductService {
   private productRepository: Repository<GenerateProduct>;
 
@@ -77,6 +84,38 @@ private async initialize() {
       throw new Error('Product not found');
     }
     return { success: true, message: 'Product deleted successfully' };
+  }
+
+  async putProducts(params: UpdateProductParams)  {
+    await this.ensureInitialized();
+    const { id, productno, productname, description } = params;
+
+    if (!id) {
+      throw new Error('ID is required for update');
+    }
+    const data = await this.productRepository.findOne({
+      where: { id: id }
+    });
+
+    if (!data) {
+      const error = new Error('Product not found');
+      throw error;
+    }
+    // 更新処理
+    const updatedData = await this.productRepository.save({
+      ...data,
+      ...(productno !== undefined && { productno }),
+      ...(productname !== undefined && { productname }),
+      ...(description !== undefined && { description })
+    });
+  
+
+    await this.productRepository.save(data);
+    return { 
+     success: true, 
+     message: 'Product updated successfully',
+     data: data 
+   };
   }
 
   // リポジトリの初期化を確認するヘルパーメソッド
