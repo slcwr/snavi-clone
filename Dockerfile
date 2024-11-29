@@ -9,7 +9,7 @@ USER node
 
 # Install dependencies
 COPY --chown=node:node package*.json ./
-#RUN npm install
+RUN npm install
 
 # Copy source code
 COPY --chown=node:node . .
