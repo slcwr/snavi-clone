@@ -7,9 +7,17 @@ RUN chown -R node:node /app
 
 USER node
 
+RUN mkdir -p /home/node/.npm-global \
+    && chown -R node:node /home/node/.npm-global
+
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+
+ENV PATH=$PATH:/home/node/.npm-global/bin
+
 # Install dependencies
 COPY --chown=node:node package*.json ./
-RUN npm install
+
+#RUN npm install
 
 # Copy source code
 COPY --chown=node:node . .
