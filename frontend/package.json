@@ -48,7 +48,7 @@
     "typescript": "^5.7.2"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
     "storybook": "storybook dev -p 6006",

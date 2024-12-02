@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
+import { ProductController } from './product/product.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,6 +11,7 @@ import { DatabaseModule } from './database/database.module';
 @Module({
   imports: [
     DatabaseModule,
+    ProductModule, 
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
