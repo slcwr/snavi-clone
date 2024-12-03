@@ -6,10 +6,8 @@ const nextConfig = {
   rewrites: async () => {
     return [
       {
-        // Next.jsのクライアントからのリクエストパス
-        source: '/api/:path*',
-        // Expressサーバーのエンドポイント
-        destination: 'http://localhost:3001/api/:path*'
+        source: '/api/products/:path*',
+        destination: 'http://localhost:3001/products/:path*'
       }
     ];
   },

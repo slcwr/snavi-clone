@@ -12,6 +12,12 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('Snavi_Clone')
     .build();
+
+    // CORSを有効化
+    app.enableCors({
+      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+      credentials: true,
+    });
   
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
