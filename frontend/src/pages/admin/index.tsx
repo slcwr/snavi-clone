@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useProducts } from '../../hooks/useProducts';
 import { useRouter } from 'next/router';
 import { useDeleteProduct } from '../../hooks/useDeleteProducts';
+import { Csvimportbutton } from '../../components/atoms/Button/CsvImportButton'
 import { 
     Dialog,
     DialogTitle, 
@@ -119,6 +120,7 @@ export default function AdminDashboard() {
         <Typography variant="h4" component="h1" gutterBottom>
           製品管理
         </Typography>
+        <Csvimportbutton/>
 
         <Box sx={{ height: 400, width: '100%' }}>
         <DataGrid

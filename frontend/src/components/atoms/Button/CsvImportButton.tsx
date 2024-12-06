@@ -1,23 +1,47 @@
 // components/atoms/Button/CsvReadButton.tsx
-import { Button } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Button, Stack } from '@mui/material';
+import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 
-interface CsvImportButtonProps {
-  onClick?: () => void;
-}
 
+// スタイルのカスタマイズ（オプション）
 const StyledButton = styled(Button)(({ theme }) => ({
-  marginLeft: theme.spacing(1),
-  textTransform: 'none',
+  minWidth: '120px',
+  '&.MuiButton-contained': {
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
+  },
 }));
 
-export const CsvImportButton = ({ onClick }: CsvImportButtonProps) => (
-  <StyledButton
-    variant="contained"
-    color="primary"
-    onClick={onClick}
-  >
-    CSVインポート
-  </StyledButton>
-);
+export const Csvimportbutton = () => {
+  const router = useRouter();
+  const handleSearch = async () => {
+    try {
+      await router.push({
+        pathname: '/csvupload',
+
+      });
+    } catch (error) {
+      console.error('Navigation error:', error);
+
+    }
+  }
+  return (
+    <Stack direction="row" justifyContent="flex-end">
+    <StyledButton
+      variant="contained"
+      color="primary"
+      onClick={handleSearch}
+
+      sx={{
+        minWidth: '70px',
+        px: 2  // パディングを調整
+      }}
+    >
+      CSVアップロード
+    </StyledButton>
+    </Stack>
+  );
+};
