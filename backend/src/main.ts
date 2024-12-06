@@ -5,6 +5,14 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
+   // CORSを最初に設定
+   app.enableCors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Snavi_Clone')
@@ -12,16 +20,10 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('Snavi_Clone')
     .build();
-
-    // CORSを有効化
-    app.enableCors({
-      origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-      credentials: true,
-    });
   
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3001, '0.0.0.0'); 
+  await app.listen(3001); 
 }
 bootstrap();

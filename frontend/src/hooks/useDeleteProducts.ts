@@ -23,16 +23,30 @@ export const useDeleteProduct = (
   const executeDelete = async () => {
     if (!productToDelete) return;
 
+    // try {
+    //   const response = await fetch(
+    //      `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?id=${productToDelete}`, 
+    //      {
+    //       method: 'DELETE',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     }
+    //   );
     try {
       const response = await fetch(
-         `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?id=${productToDelete}`, 
-         {
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${productToDelete}`, 
+        {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include',  // これを追加
+          mode: 'cors',           // これを追加
         }
       );
+  
+    
 
       if (!response.ok) {
         throw new Error('削除に失敗しました');
