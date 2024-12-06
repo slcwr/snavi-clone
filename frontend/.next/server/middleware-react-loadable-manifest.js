@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"pages/csvupload/index.tsx -> ../../components/organisms/CsvUproad/CsvUploadComponent\":{\"id\":\"pages/csvupload/index.tsx -> ../../components/organisms/CsvUproad/CsvUploadComponent\",\"files\":[\"static/chunks/src_components_organisms_CsvUproad_CsvUploadComponent_tsx.js\"]}}"

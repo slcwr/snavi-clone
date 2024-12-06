@@ -22,17 +22,6 @@ export const useDeleteProduct = (
 
   const executeDelete = async () => {
     if (!productToDelete) return;
-
-    // try {
-    //   const response = await fetch(
-    //      `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?id=${productToDelete}`, 
-    //      {
-    //       method: 'DELETE',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     }
-    //   );
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${productToDelete}`, 
@@ -46,8 +35,6 @@ export const useDeleteProduct = (
         }
       );
   
-    
-
       if (!response.ok) {
         throw new Error('削除に失敗しました');
       }
