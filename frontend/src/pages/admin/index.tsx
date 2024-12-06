@@ -67,15 +67,6 @@ export default function AdminDashboard() {
       if (!response.ok) {
         throw new Error('更新に失敗しました');
       }
-
-      // 成功した場合、ローカルの状態を更新
-      // setProducts(prevProducts =>
-      //   prevProducts.map(product =>
-      //     product.id === updatedRow.id
-      //       ? { ...product, [updatedRow.field]: updatedRow.value }
-      //       : product
-      //   )
-      // );
     } catch (error) {
       console.error('更新エラー:', error);
       alert('更新に失敗しました');

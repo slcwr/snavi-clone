@@ -34,4 +34,17 @@ export class ProductService {
     const product = await this.productRepository.findOne({ where: { id } });
     return await this.productRepository.remove(product);
   }
+
+  async bulkCreate(products: CreateProductDto[]) {
+    try {
+      return await this.productRepository
+        .createQueryBuilder()
+        .insert()
+        .into(Product)
+        .values(products)
+        .execute();
+    } catch (error) {
+      throw new Error('Bulk insert failed');
+    }
+  }
 }

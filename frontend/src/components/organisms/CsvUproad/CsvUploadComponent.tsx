@@ -12,15 +12,32 @@ const CsvUploadComponent = () => {
   useEffect(() => {
     setMounted(true)
   }, [])
+  
+  const formatCsvData = (data: any[]) => {
+    const headers = data[0];
+    return data.slice(1).map(row => {
+      const obj: any = {};
+      headers.forEach((header: string, index: number) => {
+        // boolean値の変換
+        if (header === 'isActive') {
+          obj[header] = row[index].toLowerCase() === 'true';
+        } else {
+          obj[header] = row[index];
+        }
+      });
+      return obj;
+    });
+  };
 
   const handleUpload = async () => {
     try {
-      const response = await fetch('/api/upload', {
+      const formattedData = formatCsvData(csvData);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/upload/csv`,  {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ data: csvData }),
+        body: JSON.stringify({ data: formattedData }),
       });
       if (response.ok) {
         alert('アップロード成功');
@@ -28,6 +45,7 @@ const CsvUploadComponent = () => {
       }
     } catch (error) {
       console.error('Upload failed:', error);
+      
     }
   };
 

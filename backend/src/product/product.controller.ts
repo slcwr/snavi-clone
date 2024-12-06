@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,UseInterceptors, UploadedFile, HttpException, HttpStatus  } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -39,4 +39,16 @@ export class ProductController {
   remove(@Param('id') id: string) {
     return this.productService.remove(id);
   }
+
+  @Post('upload/csv')
+  @ApiOperation({ summary: 'CSVから製品を一括登録' })
+  @ApiResponse({ status: 201, description: '製品が一括登録されました' })
+  async uploadCsv(@Body() data: { data: CreateProductDto[] }) {
+    try {
+      return await this.productService.bulkCreate(data.data);
+    } catch (error) {
+      throw new HttpException('CSV upload failed', HttpStatus.BAD_REQUEST);
+    }
+  }
+
 }

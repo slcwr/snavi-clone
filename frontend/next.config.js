@@ -6,6 +6,10 @@ const nextConfig = {
   rewrites: async () => {
     return [
       {
+        source: '/api/products/upload/csv',
+        destination: 'http://localhost:3001/products/upload/csv'
+      },
+      {
         source: '/api/products/:path*',
         destination: 'http://localhost:3001/products/:path*'
       }
