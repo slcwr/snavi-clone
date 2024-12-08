@@ -15,7 +15,7 @@ const nextConfig = {
       }
     ];
   },
-  // TypeORMのブラウザバンドル対策
+  // //TypeORMのブラウザバンドル対策
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
