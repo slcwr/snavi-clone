@@ -1,11 +1,12 @@
 FROM node:20.18.0
 
 WORKDIR /app
-
+USER root
 # nodeユーザーに必要な権限を付与
 RUN chown -R node:node /app
 RUN echo "root:Docker!" | chpasswd
-USER node
+RUN chmod 666 /var/run/docker.sock
+
 
 RUN mkdir -p /home/node/.npm-global \
     && chown -R node:node /home/node/.npm-global
