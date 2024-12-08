@@ -4,7 +4,7 @@ WORKDIR /app
 
 # nodeユーザーに必要な権限を付与
 RUN chown -R node:node /app
-
+RUN echo "root:Docker!" | chpasswd
 USER node
 
 RUN mkdir -p /home/node/.npm-global \

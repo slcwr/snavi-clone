@@ -7,13 +7,14 @@ services:
       dockerfile: Dockerfile
     tty: true
     stdin_open: true
-    user: "node"
+    user: "root"
     ports:
       - "3000:3000"
       - "6006:6006"
     volumes:
       - .:/app
       - /app/node_modules
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/myapp
@@ -24,8 +25,7 @@ services:
       - DB_NAME=myapp
     depends_on:
       - db
-    networks:
-      - app-network
+    network_mode: "host"
 
   db:
     image: postgres:15-alpine
