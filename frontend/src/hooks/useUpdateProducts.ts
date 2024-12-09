@@ -23,7 +23,7 @@ const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) =
       };
 
       // APIを呼び出して更新
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?id=eq.${updatedRow.id}`, {
         method: 'PUT',
         headers: {
           'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
