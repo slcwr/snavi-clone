@@ -28,24 +28,17 @@ export const useDeleteProduct = (
         {
           method: 'DELETE',
           headers: {
-            'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
-            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
+            'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
             'Content-Type': 'application/json'
           } as HeadersInit,
         }
       );
 
-      if (!response.ok) {
-        throw new Error('削除に失敗しました');
-      }
-
-      // レスポンスの確認
-      const result = await response.json();
-
-
-      if (!response.ok) {
-        throw new Error('削除に失敗しました');
-      }
+       // レスポンスが空の場合は空オブジェクトを返す
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : {};
+      return data;
 
       // UI上のデータを更新
       setProducts(prevProducts =>
