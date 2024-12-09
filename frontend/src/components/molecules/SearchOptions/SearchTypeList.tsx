@@ -1,8 +1,10 @@
+import { Products } from '../../atoms/Link/Products'
+
 export const SearchTypeList = () => (
 
     <div className="search-type-list">
       <div className="search-type-item">
-        <a href="#">製品名から探す</a>
+        <Products/>
         <span>・・・製品名の一部や固文字から検索</span><br/>
         <a href="#">カテゴリから探す</a>
         <span>・・・各カテゴリに属する製品を検索</span><br/>
