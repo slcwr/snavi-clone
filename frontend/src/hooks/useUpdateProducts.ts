@@ -24,11 +24,12 @@ const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) =
 
       // APIを呼び出して更新
       const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?id=eq.${updatedRow.id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
         } as HeadersInit,
         body: JSON.stringify(updateData),
       });
@@ -44,7 +45,7 @@ const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) =
       }
     } catch (error) {
       console.error('更新エラー:', error);
-      alert('更新に失敗しました');
+      throw error;
     }
    }
 
