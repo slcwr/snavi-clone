@@ -29,7 +29,7 @@ interface Product {
 export default function AdminDashboard() {
   
   const [products, setProducts] = useState<Product[]>([]);
-  const { handleCellEditCommit }:any = useUpdateProduct(setProducts);
+  const { handleCellEditCommit } = useUpdateProduct(setProducts);
   const { data, loading, error } = useProducts();
   const {
     deleteDialogOpen,

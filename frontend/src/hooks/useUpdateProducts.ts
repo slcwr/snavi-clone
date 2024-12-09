@@ -47,4 +47,9 @@ const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) =
       alert('更新に失敗しました');
     }
    }
+
+   // オブジェクトとして関数を返す
+   return {
+    handleCellEditCommit
+   };
   };
