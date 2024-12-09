@@ -2,31 +2,34 @@ import { useEffect, useState } from 'react';
 import { useProducts } from '../../hooks/useProducts';
 import { useRouter } from 'next/router';
 import { useDeleteProduct } from '../../hooks/useDeleteProducts';
+import { useUpdateProduct } from '../../hooks/useUpdateProducts';
 import { Csvimportbutton } from '../../components/atoms/Button/CsvImportButton'
 
 
-import { 
-    Dialog,
-    DialogTitle, 
-    DialogContent, 
-    DialogActions, 
-    Button,
-    Container, 
-    Paper, 
-    Typography, 
-    Box
-} from '@mui/material';  
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Container,
+  Paper,
+  Typography,
+  Box
+} from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 interface Product {
-    id: string;
-    productno: string;
-    productname: string;
-    description: string;
+  id: string;
+  productno: string;
+  productname: string;
+  description: string;
 }
 
 export default function AdminDashboard() {
+  
   const [products, setProducts] = useState<Product[]>([]);
+  const { handleCellEditCommit }:any = useUpdateProduct(setProducts);
   const { data, loading, error } = useProducts();
   const {
     deleteDialogOpen,
@@ -42,43 +45,7 @@ export default function AdminDashboard() {
     }
   }, [data]);
 
-  // 編集完了時の処理
-  const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) => {
-    try {
-      const updateData = {
-        productno: updatedRow.productno,
-        productname: updatedRow.productname,
-        description: updatedRow.description,
-        updatedAt: new Date().toISOString() // 現在の日時を追加
-      };
-
-      
-      // APIを呼び出して更新
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`, {
-        method: 'PUT',
-        headers: {
-          'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
-          'Content-Type': 'application/json'
-        } as HeadersInit,
-        body: JSON.stringify(updateData),
-      });
-      console.log('送信するデータ:', {
-        updatedRow,
-        updateData,
-        url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`,
-        key: `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`
-        
-      });
-
-      if (!response.ok) {
-        throw new Error('更新に失敗しました');
-      }
-    } catch (error) {
-      console.error('更新エラー:', error);
-      alert('更新に失敗しました');
-    }
-  };
+  // 編集完了時の処理→hooksに移動 
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 130, editable: false },
@@ -105,6 +72,7 @@ export default function AdminDashboard() {
   ];
 
   return (
+
     <Container maxWidth="lg">
       <Dialog
         open={deleteDialogOpen}
@@ -120,56 +88,34 @@ export default function AdminDashboard() {
             削除
           </Button>
         </DialogActions>
-      </Dialog> 
+      </Dialog>
 
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           製品管理
         </Typography>
-        <Csvimportbutton/>
+        <Csvimportbutton />
 
         <Box sx={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={products}
-          columns={columns}
-          initialState={{
-          pagination: {
-            paginationModel: { pageSize: 5, page: 0 },
-          },
-         }}
-          pageSizeOptions={[5]}
-          processRowUpdate={async (updatedRow, originalRow) => {
-            try {
-              console.log('Updatingrow.id:', updatedRow.id); // デバッグ用
+          <DataGrid
+            rows={products}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 5, page: 0 },
+              },
+            }}
+            pageSizeOptions={[5]}
+            processRowUpdate={async (updatedRow, originalRow) => {
+              await handleCellEditCommit(updatedRow, originalRow);
+              return updatedRow;
+            }}
+            loading={loading}
+            disableRowSelectionOnClick
+            editMode="row"
+          />
 
-              const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`, {
-              method: 'PUT',
-              headers: {
-                'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-                'Content-Type': 'application/json'
-              } as HeadersInit,
-            body: JSON.stringify({
-              productno: updatedRow.productno,
-              productname: updatedRow.productname,
-              description: updatedRow.description
-            }),
-          });
 
-          if (!response.ok) {
-          throw new Error('更新に失敗しました');
-          }
-
-          return updatedRow;
-            } catch (error) {
-          console.error('更新エラー:', error);
-          return originalRow;
-          }
-          }}
-          loading={loading}
-          disableRowSelectionOnClick
-          editMode="row"
-        />
         </Box>
       </Box>
     </Container>

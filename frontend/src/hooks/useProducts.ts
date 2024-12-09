@@ -36,7 +36,7 @@ export const useProducts = () => {
             'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
             'Content-Type': 'application/json'
           } as HeadersInit,
-        });;
+        });
         
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`);
