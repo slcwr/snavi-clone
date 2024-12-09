@@ -35,7 +35,7 @@ const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) =
       console.log('送信するデータ:', {
         updatedRow,
         updateData,
-        url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`,
+        url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?id=eq.${updatedRow.id}`,
         key: `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`   
       });
 
