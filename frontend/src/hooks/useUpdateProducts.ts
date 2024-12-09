@@ -21,18 +21,23 @@ const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) =
         description: updatedRow.description,
         updatedAt: new Date().toISOString() // 現在の日時を追加
       };
+      const headers = {
+        'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      };
 
       // APIを呼び出して更新
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?id=eq.${updatedRow.id}`, {
-        method: 'PATCH',
-        headers: {
-          'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        } as HeadersInit,
-        body: JSON.stringify(updateData),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?id=eq.${updatedRow.id}`,
+        {
+            method: 'PATCH',
+            headers,
+            body: JSON.stringify(updateData)
+        }
+      );
+
       console.log('送信するデータ:', {
         updatedRow,
         updateData,
@@ -41,11 +46,12 @@ const handleCellEditCommit = async (updatedRow: Product, originalRow:Product ) =
       });
 
       if (!response.ok) {
-        throw new Error('更新に失敗しました');
+        throw new Error(`更新に失敗しました: ${response.status}`);
       }
+      return updatedRow;
     } catch (error) {
       console.error('更新エラー:', error);
-      throw error;
+      return originalRow;
     }
    }
 
