@@ -24,16 +24,14 @@ export const useDeleteProduct = (
     if (!productToDelete) return;
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?${productToDelete}`, 
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products??id=eq.${productToDelete}`, 
         {
           method: 'DELETE',
           headers: {
             'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
             'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
             'Content-Type': 'application/json'
-          } as HeadersInit,
-          credentials: 'include',  
-          mode: 'cors',           
+          } as HeadersInit,          
         }
       );
   
