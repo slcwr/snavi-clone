@@ -28,8 +28,8 @@ export const useProducts = () => {
         if (modelName) params.append('modelName', String(modelName));
 
         // Nest.jsのエンドポイントを呼び出し
-        const response = await fetch(`/api/products?${params.toString()}`);
-        //const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products?${params.toString()}`);
+        //const response = await fetch(`/api/products?${params.toString()}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?${params.toString()}`);
         
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`);

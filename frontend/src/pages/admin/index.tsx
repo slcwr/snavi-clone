@@ -141,7 +141,7 @@ export default function AdminDashboard() {
             try {
               console.log('Updatingrow.id:', updatedRow.id); // デバッグ用
 
-              const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${updatedRow.id}`, {
+              const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`, {
               method: 'PUT',
               headers: {
               'Content-Type': 'application/json',
