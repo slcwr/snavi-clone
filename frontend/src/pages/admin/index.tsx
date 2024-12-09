@@ -144,8 +144,11 @@ export default function AdminDashboard() {
               const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`, {
               method: 'PUT',
               headers: {
-              'Content-Type': 'application/json',
-            },
+                'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+                'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+              } as HeadersInit,
             body: JSON.stringify({
               productno: updatedRow.productno,
               productname: updatedRow.productname,
