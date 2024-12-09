@@ -54,17 +54,20 @@ export default function AdminDashboard() {
 
      
       // APIを呼び出して更新
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${updatedRow.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/rest/v1/products/${updatedRow.id}`, {
         method: 'PUT',
         headers: {
+          'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
           'Content-Type': 'application/json',
-        },
+          'Prefer': 'return=minimal'
+        } as HeadersInit,
         body: JSON.stringify(updateData),
       });
       console.log('送信するデータ:', {
         updatedRow,
         updateData,
-        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/products/${updatedRow.id}`
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/rest/v1/products/${updatedRow.id}`
       });
 
       if (!response.ok) {
