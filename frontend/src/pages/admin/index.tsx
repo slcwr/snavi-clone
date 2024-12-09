@@ -52,22 +52,23 @@ export default function AdminDashboard() {
         updatedAt: new Date().toISOString() // 現在の日時を追加
       };
 
-     
+      
       // APIを呼び出して更新
       const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`, {
         method: 'PUT',
         headers: {
           'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
+          'Content-Type': 'application/json'
         } as HeadersInit,
         body: JSON.stringify(updateData),
       });
       console.log('送信するデータ:', {
         updatedRow,
         updateData,
-        url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`
+        url: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/${updatedRow.id}`,
+        key: `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`
+        
       });
 
       if (!response.ok) {
@@ -146,8 +147,7 @@ export default function AdminDashboard() {
               headers: {
                 'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
                 'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-                'Content-Type': 'application/json',
-                'Prefer': 'return=minimal'
+                'Content-Type': 'application/json'
               } as HeadersInit,
             body: JSON.stringify({
               productno: updatedRow.productno,

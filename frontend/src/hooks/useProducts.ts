@@ -29,7 +29,14 @@ export const useProducts = () => {
 
         // Nest.jsのエンドポイントを呼び出し
         //const response = await fetch(`/api/products?${params.toString()}`);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?${params.toString()}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?${params.toString()}`, {
+          method: 'GET',
+          headers: {
+            'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
+            'Content-Type': 'application/json'
+          } as HeadersInit,
+        });;
         
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`);
