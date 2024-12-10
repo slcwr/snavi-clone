@@ -30,10 +30,9 @@ export const useProducts = () => {
         // Nest.jsのエンドポイントを呼び出し
         //const response = await fetch(`/api/products?${params.toString()}`);
         const baseUrl = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
-        Object.entries(params).forEach(([key, value]) => {
-          baseUrl.searchParams.append(key, value);
-        });
-        
+        const searchParams = new URLSearchParams(params);
+        baseUrl.search = searchParams.toString();
+
         const response = await fetch(baseUrl, {
           method: 'GET',
           headers: {
