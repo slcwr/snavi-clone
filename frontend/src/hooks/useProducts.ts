@@ -31,16 +31,21 @@ export const useProducts = () => {
         //const response = await fetch(`/api/products?${params.toString()}`);
         const baseUrl = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
         const searchParams = new URLSearchParams(params);
+        
 
-        // Supabase形式でのフィルタリング
+        // 基本的なクエリパラメータ
+        searchParams.append('select', '*'); // すべてのカラムを選択
+
+        // フィルタリング条件の追加
         if (modelName) {
-          searchParams.append('productname', `eq.${modelName}`); // 完全一致
+          searchParams.append('productname', `eq.${encodeURIComponent(String(modelName))}`);
         }
         if (modelNumber) {
-          searchParams.append('productno', `eq.${modelNumber}`); // 完全一致
+          searchParams.append('productno', `eq.${encodeURIComponent(String(modelNumber))}`);
         }
         if (keyword) {
-          searchParams.append('productname', `ilike.%${keyword}%`); // 部分一致
+          // キーワード検索の場合は製品名で部分一致
+          searchParams.append('productname', `ilike.%${encodeURIComponent(String(keyword))}%`);
         }
 
         baseUrl.search = searchParams.toString();
