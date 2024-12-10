@@ -31,6 +31,18 @@ export const useProducts = () => {
         //const response = await fetch(`/api/products?${params.toString()}`);
         const baseUrl = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
         const searchParams = new URLSearchParams(params);
+
+        // Supabase形式でのフィルタリング
+        if (modelName) {
+          searchParams.append('productname', `eq.${modelName}`); // 完全一致
+        }
+        if (modelNumber) {
+          searchParams.append('productno', `eq.${modelNumber}`); // 完全一致
+        }
+        if (keyword) {
+          searchParams.append('productname', `ilike.%${keyword}%`); // 部分一致
+        }
+
         baseUrl.search = searchParams.toString();
 
         const response = await fetch(baseUrl, {
