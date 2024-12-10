@@ -44,8 +44,10 @@ export const useProducts = () => {
           searchParams.append('productno', `eq.${modelNumber}`);
         }
         if (keyword) {
-          // キーワード検索の場合は製品名で部分一致
-          searchParams.append('productname', `ilike.*${keyword}*`);
+          searchParams.append(
+            'or', 
+            `productname.ilike.%${keyword}%,productno.ilike.%${keyword}%,description.ilike.%${keyword}%`
+          );
         }
 
         baseUrl.search = searchParams.toString();
