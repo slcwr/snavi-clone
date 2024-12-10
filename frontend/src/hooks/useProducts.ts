@@ -30,7 +30,7 @@ export const useProducts = () => {
         // Nest.jsのエンドポイントを呼び出し
         //const response = await fetch(`/api/products?${params.toString()}`);
         const baseUrl = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
-        const searchParams = new URLSearchParams(params);
+        const searchParams = new URLSearchParams();
         
 
         // 基本的なクエリパラメータ
@@ -38,14 +38,14 @@ export const useProducts = () => {
 
         // フィルタリング条件の追加
         if (modelName) {
-          searchParams.append('productname', `eq.${encodeURIComponent(String(modelName))}`);
+          searchParams.append('productname', `eq.${modelName}`);
         }
         if (modelNumber) {
-          searchParams.append('productno', `eq.${encodeURIComponent(String(modelNumber))}`);
+          searchParams.append('productno', `eq.${modelNumber}`);
         }
         if (keyword) {
           // キーワード検索の場合は製品名で部分一致
-          searchParams.append('productname', `ilike.%${encodeURIComponent(String(keyword))}%`);
+          searchParams.append('productname', `ilike.%${keyword}%`);
         }
 
         baseUrl.search = searchParams.toString();
