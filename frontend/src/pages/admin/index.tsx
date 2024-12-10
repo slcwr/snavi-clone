@@ -95,7 +95,7 @@ export default function AdminDashboard() {
           製品管理
         </Typography>
         <Csvimportbutton />
-        <p>表内は直接編集できます。</p>
+        <p>表内は直接編集できます。編集内容は即時反映されます。</p>
         <Box sx={{ height: 400, width: '100%' }}>
           <DataGrid
             rows={products}

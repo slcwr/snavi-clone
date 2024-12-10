@@ -14,13 +14,13 @@ export const useProducts = () => {
   const [generateproducts, setGenerateProducts] = useState<GenerateProduct[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { keyword, modelNumber,modelName } = router.query;
+  const { keyword, modelNumber, modelName } = router.query;
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
         const params = new URLSearchParams();
         if (keyword) params.append('keyword', String(keyword));
@@ -29,7 +29,12 @@ export const useProducts = () => {
 
         // Nest.jsのエンドポイントを呼び出し
         //const response = await fetch(`/api/products?${params.toString()}`);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?${params.toString()}`, {
+        const baseUrl = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
+        Object.entries(params).forEach(([key, value]) => {
+          baseUrl.searchParams.append(key, value);
+        });
+        
+        const response = await fetch(baseUrl, {
           method: 'GET',
           headers: {
             'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
@@ -37,14 +42,14 @@ export const useProducts = () => {
             'Content-Type': 'application/json'
           } as HeadersInit,
         });
-        
+
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`);
         }
 
         const data = await response.json();
         console.log('Received data:', data);
-        console.log('data.length:',data.length)
+        console.log('data.length:', data.length)
 
         const productArray = Array.isArray(data) ? data : data.products || [];
         setGenerateProducts(productArray);
@@ -59,12 +64,12 @@ export const useProducts = () => {
     if (router.isReady) {
       fetchProducts();
     }
-  }, [router.isReady, keyword, modelNumber, modelName ]);
+  }, [router.isReady, keyword, modelNumber, modelName]);
 
   return {
     data: generateproducts,
     loading,
     error
   };
-  
+
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SearchInput } from '../../atoms/SearchInput/SearchInput'; 
 import { SearchButton } from '../../atoms/SearchButton/SearchButton';
 import { styled } from '@mui/material/styles';
-import { Box, Stack, Tabs, Tab  } from '@mui/material'; 
+import { Stack  } from '@mui/material'; 
 
 
 const SearchContainer = styled('div')(({ theme }) => ({
