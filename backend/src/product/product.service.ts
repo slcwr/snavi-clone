@@ -14,7 +14,7 @@ export class ProductService {
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
     private dataSource: DataSource,
-  ) {}
+  ) { }
 
   // トランザクションが必要なメソッド
   async create(createProductDto: CreateProductDto) {
@@ -25,9 +25,9 @@ export class ProductService {
     try {
       const product = this.productRepository.create(createProductDto);
       const result = await queryRunner.manager.save(product);
-      
+
       this.logger.log(`Product created: ${JSON.stringify(result)}`);
-      
+
       await queryRunner.commitTransaction();
       return result;
     } catch (error) {
@@ -57,7 +57,7 @@ export class ProductService {
     try {
       await queryRunner.manager.update(Product, id, updateProductDto);
       const result = await queryRunner.manager.findOne(Product, { where: { id } });
-      
+
       await queryRunner.commitTransaction();
       return result;
     } catch (error) {
@@ -77,7 +77,7 @@ export class ProductService {
     try {
       const product = await queryRunner.manager.findOne(Product, { where: { id } });
       const result = await queryRunner.manager.remove(Product, product);
-      
+
       await queryRunner.commitTransaction();
       return result;
     } catch (error) {
@@ -111,4 +111,35 @@ export class ProductService {
       await queryRunner.release();
     }
   }
+
+  async findAllWithParams(params: {
+    keyword?: string;
+    modelNumber?: string;
+    modelName?: string;
+  }) {
+    const queryBuilder = this.productRepository.createQueryBuilder('product');
+
+    if (params.keyword) {
+      queryBuilder.andWhere(
+        '(product.productname LIKE :keyword OR product.description LIKE :keyword)',
+        { keyword: `%${params.keyword}%` }
+      );
+    }
+
+    if (params.modelNumber) {
+      queryBuilder.andWhere('product.productno = :modelNumber', {
+        modelNumber: params.modelNumber,
+      });
+    }
+
+    if (params.modelName) {
+      queryBuilder.andWhere('product.productname = :modelName', {
+        modelName: params.modelName,
+      });
+    }
+
+    return queryBuilder.getMany();
+  }
+
+
 }
