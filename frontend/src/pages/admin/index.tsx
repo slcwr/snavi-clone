@@ -18,30 +18,25 @@ import {
   Box
 } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { GenerateProduct } from '@/types/product';
 
-interface Product {
-  id: string;
-  productno: string;
-  productname: string;
-  description: string;
-}
 
 export default function AdminDashboard() {
   
-  const [products, setProducts] = useState<Product[]>([]);
-  const { handleCellEditCommit } = useUpdateProduct(setProducts);
+  const [generateproducts, setGenerateProduct ] = useState<GenerateProduct[]>([]);
+  const { handleCellEditCommit } = useUpdateProduct(setGenerateProduct);
   const { data, loading, error } = useProducts();
   const {
     deleteDialogOpen,
     handleDelete,
     executeDelete,
     handleCloseDialog,
-  } = useDeleteProduct(setProducts);
+  } = useDeleteProduct(setGenerateProduct);
   const router = useRouter();
 
   useEffect(() => {
     if (data) {
-      setProducts(data);
+      setGenerateProduct(data);
     }
   }, [data]);
 
@@ -98,7 +93,7 @@ export default function AdminDashboard() {
         <p>表内は直接編集できます。編集内容は即時反映されます。</p>
         <Box sx={{ height: 400, width: '100%' }}>
           <DataGrid
-            rows={products}
+            rows={generateproducts}
             columns={columns}
             initialState={{
               pagination: {

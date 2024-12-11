@@ -58,7 +58,8 @@ export const useProducts = (initialData?: GenerateProduct[]) => {
   if (modelName) params.append('modelName', String(modelName));
 
   const { data, error, isLoading } = useSWR(
-    router.isReady ? ['products', params.toString()] : null,
+    //router.isReady ? ['products', params.toString()] : null,
+    ['products', params.toString()],
     ([_, paramsString]) => fetcher('products', new URLSearchParams(paramsString)),
     {
       fallbackData: initialData,
