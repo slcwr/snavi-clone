@@ -1,5 +1,5 @@
-// hooks/useProducts
-import { useEffect, useState } from 'react';
+// hooks/useProducts.ts
+import useSWR from 'swr';
 import { useRouter } from 'next/router';
 
 interface GenerateProduct {
@@ -9,87 +9,72 @@ interface GenerateProduct {
   description: string;
 }
 
-export const useProducts = () => {
+// fetcherを分離
+const fetcher = async (url: string, params: URLSearchParams) => {
+  const baseUrl = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
+  const searchParams = new URLSearchParams();
+  
+  searchParams.append('select', '*');
+
+  const { modelName, modelNumber, keyword } = Object.fromEntries(params);
+
+  if (modelName) {
+    searchParams.append('productname', `eq.${modelName}`);
+  }
+  if (modelNumber) {
+    searchParams.append('productno', `eq.${modelNumber}`);
+  }
+  if (keyword) {
+    const conditions = [
+      `productname.ilike.%${keyword}%`,
+      `productno.ilike.%${keyword}%`,
+      `description.ilike.%${keyword}%`
+    ].join(',');
+    searchParams.append('or', `(${conditions})`);
+  }
+
+  baseUrl.search = searchParams.toString();
+
+  const response = await fetch(baseUrl, {
+    method: 'GET',
+    headers: {
+      'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+      'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
+      'Content-Type': 'application/json'
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return Array.isArray(data) ? data : data.products || [];
+};
+
+export const useProducts = (initialData?: GenerateProduct[]) => {
   const router = useRouter();
-  const [generateproducts, setGenerateProducts] = useState<GenerateProduct[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { keyword, modelNumber, modelName } = router.query;
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      setError(null);
+  // クエリパラメータを作成
+  const params = new URLSearchParams();
+  if (keyword) params.append('keyword', String(keyword));
+  if (modelNumber) params.append('modelNumber', String(modelNumber));
+  if (modelName) params.append('modelName', String(modelName));
 
-      try {
-        const params = new URLSearchParams();
-        if (keyword) params.append('keyword', String(keyword));
-        if (modelNumber) params.append('modelNumber', String(modelNumber));
-        if (modelName) params.append('modelName', String(modelName));
-
-        // Nest.jsのエンドポイントを呼び出し
-        //const response = await fetch(`/api/products?${params.toString()}`);
-        const baseUrl = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
-        const searchParams = new URLSearchParams();
-        
-
-        // 基本的なクエリパラメータ
-        searchParams.append('select', '*'); // すべてのカラムを選択
-
-        // フィルタリング条件の追加
-        if (modelName) {
-          searchParams.append('productname', `eq.${modelName}`);
-        }
-        if (modelNumber) {
-          searchParams.append('productno', `eq.${modelNumber}`);
-        }
-        if (keyword) {
-          const conditions = [
-            `productname.ilike.%${keyword}%`,
-            `productno.ilike.%${keyword}%`,
-            `description.ilike.%${keyword}%`
-          ].join(',');
-          searchParams.append('or', `(${conditions})`);
-        }
-
-        baseUrl.search = searchParams.toString();
-
-        const response = await fetch(baseUrl, {
-          method: 'GET',
-          headers: {
-            'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
-            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
-            'Content-Type': 'application/json'
-          } as HeadersInit,
-        });
-
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Received data:', data);
-        console.log('data.length:', data.length)
-
-        const productArray = Array.isArray(data) ? data : data.products || [];
-        setGenerateProducts(productArray);
-      } catch (error) {
-        console.error('製品の取得に失敗しました:', error);
-        setError('製品の取得に失敗しました');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (router.isReady) {
-      fetchProducts();
+  const { data, error, isLoading } = useSWR(
+    router.isReady ? ['products', params.toString()] : null,
+    ([_, paramsString]) => fetcher('products', new URLSearchParams(paramsString)),
+    {
+      fallbackData: initialData,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     }
-  }, [router.isReady, keyword, modelNumber, modelName]);
+  );
 
   return {
-    data: generateproducts,
-    loading,
-    error
+    data: data ?? [],
+    loading: isLoading,
+    error: error?.message ?? null
   };
-
-}
+};
