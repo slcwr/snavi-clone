@@ -1,13 +1,8 @@
 // hooks/useProducts.ts
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
+import { GenerateProduct } from '../types/product'
 
-interface GenerateProduct {
-  id: string;
-  productno: string;
-  productname: string;
-  description: string;
-}
 
 // fetcherを分離
 const fetcher = async (url: string, params: URLSearchParams) => {
@@ -67,6 +62,7 @@ export const useProducts = (initialData?: GenerateProduct[]) => {
     ([_, paramsString]) => fetcher('products', new URLSearchParams(paramsString)),
     {
       fallbackData: initialData,
+      suspense: true,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     }

@@ -5,7 +5,7 @@ import { CategorySearch } from '../../components/molecules/SearchForm/CategorySe
 import { usePagination } from '../../hooks/usePagination';
 import Button from '../../components/atoms/Button';
 import { useProducts } from '../../hooks/useProducts';
-
+import { GenerateProduct } from '../../types/product'
 
 import {
   Table,
@@ -24,7 +24,7 @@ export default function ProductList() {
     itemsPerPage: 3
   });
 
-  const currentItems = data.slice(pagination.startIndex, pagination.endIndex);
+  const currentItems: GenerateProduct[] = data.slice(pagination.startIndex, pagination.endIndex);
 
 
   if (loading) return <div>読み込み中...</div>;
