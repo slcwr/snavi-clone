@@ -4,8 +4,6 @@ import { useRouter } from 'next/router';
 import { useDeleteProduct } from '../../../hooks/useDeleteProducts';
 import { useUpdateProduct } from '../../../hooks/useUpdateProducts';
 import { Csvimportbutton } from '../../../components/atoms/Button/CsvImportButton'
-
-
 import {
   Dialog,
   DialogTitle,
@@ -22,7 +20,7 @@ import { GenerateProduct } from '@/types/product';
 
 
 export default function AdminDashboard() {
-  
+  const [isClient, setIsClient] = useState(false);
   const [generateproducts, setGenerateProduct ] = useState<GenerateProduct[]>([]);
   const { handleCellEditCommit } = useUpdateProduct(setGenerateProduct);
   const { data, loading, error } = useProducts();
@@ -32,15 +30,26 @@ export default function AdminDashboard() {
     executeDelete,
     handleCloseDialog,
   } = useDeleteProduct(setGenerateProduct);
+  
   const router = useRouter();
 
+  // クライアントサイド初期化
   useEffect(() => {
-    if (data) {
+    setIsClient(true);
+  }, []);
+
+  // データ更新
+  useEffect(() => {
+    if (isClient && data) {
       setGenerateProduct(data);
     }
-  }, [data]);
+  }, [isClient, data]);
 
-  // 編集完了時の処理→hooksに移動 
+  // サーバーサイドレンダリング時はnullを返す
+  if (!isClient) {
+    return <div>Loading...</div>; // または適切なローディング表示
+  }
+
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 130, editable: false },
