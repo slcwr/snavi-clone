@@ -19,20 +19,31 @@ import {
 
 export default function ProductList() {
   const [isClient, setIsClient] = useState(false);
-  
+  const { data, loading, error } = useProducts();
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const { data, loading, error } = useProducts();
+  // クライアントサイドレンダリングの確認
+  if (!isClient) return null;
+
+  // データがロード中の場合
+  if (loading) return <div>読み込み中...</div>;
+  
+  // エラーがある場合
+  if (error) return <div>エラー: {error}</div>;
+
+  // データが存在しない場合
+  if (!data) return <div>データが見つかりません</div>;
+
+  
   const pagination = usePagination({
-    totalItems: data.length,
+    totalItems: data.length || 0,
     itemsPerPage: 3
   });
   const currentItems: GenerateProduct[] = data.slice(pagination.startIndex, pagination.endIndex);
 
-  if (loading) return <div>読み込み中...</div>;
-  if (error) return <div>エラー: {error}</div>;
+
 
   return (
     <div>
