@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useCSVReader } from 'react-papaparse'
 import { useState, useEffect } from 'react'
 import styles from './CsvUploadComponent.module.scss'

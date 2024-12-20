@@ -1,4 +1,5 @@
 // components/organisms/Header/index.tsx
+'use client';
 import styles from './Header.module.scss';
 
 export const Header = () => {

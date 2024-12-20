@@ -1,4 +1,5 @@
 // hooks/useConfigurationStorage.ts
+'use client';
 import { useState, useCallback } from 'react';
 
 interface Configuration {

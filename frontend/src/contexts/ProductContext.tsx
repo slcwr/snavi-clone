@@ -1,4 +1,5 @@
 // contexts/ProductContext.tsx
+'use client';
 import { createContext, useContext, useEffect, useState } from 'react'
 
 const ProductContext = createContext<any>({})

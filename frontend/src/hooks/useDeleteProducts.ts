@@ -1,4 +1,5 @@
 // hooks/useDeleteProduct.ts
+'use client';
 import { useState } from 'react';
 
 interface UseDeleteProduct {

@@ -1,4 +1,5 @@
 // components/atoms/Button/SearchButton.tsx
+'use client';
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';

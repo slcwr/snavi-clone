@@ -1,4 +1,5 @@
 // components/molecules/ModalContent/index.tsx
+'use client';
 import { useState } from 'react';
 import styles from './ModalContent.module.scss';
 

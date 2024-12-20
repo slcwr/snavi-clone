@@ -1,4 +1,5 @@
 // components/organisms/Sidebar/index.tsx
+'use client';
 import { FC, useState } from 'react';
 import { ModalContent } from './ModalContent'
 import { useRouter } from 'next/router';

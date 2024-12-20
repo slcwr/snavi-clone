@@ -1,4 +1,5 @@
 // pages/_app.tsx
+'use client';
 import type { AppProps } from 'next/app'
 import '../styles/globals.scss'
 import dynamic from "next/dynamic";

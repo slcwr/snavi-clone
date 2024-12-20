@@ -1,4 +1,5 @@
 // components/organisms/Footer/index.tsx
+'use client';
 import styles from './Footer.module.scss';
 
 export const Footer = () => {

@@ -1,4 +1,5 @@
 // hooks/usePagination.ts
+'use client';
 import { useState } from 'react';
 
 interface UsePaginationProps {

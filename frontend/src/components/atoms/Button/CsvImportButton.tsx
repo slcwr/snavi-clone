@@ -1,4 +1,5 @@
 // components/atoms/Button/CsvReadButton.tsx
+'use client';
 import { Button, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';

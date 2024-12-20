@@ -1,4 +1,5 @@
 // components/organisms/ProductSearch/index.tsx
+'use client';
 import styles from './ProductSearch.module.scss'
 import { SectionTitle } from '../../atoms/SectionTitle/SectionTitle';
 import { SearchTypeList } from '../../molecules/SearchOptions/SearchTypeList';

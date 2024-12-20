@@ -1,4 +1,5 @@
 // components/templates/HomeTemplate/index.tsx
+'use client';
 import { Header } from '../../../components/organisms/Header';
 import { Footer } from '../../../components/organisms/Footer';
 import { Sidebar } from '../../molecules/SearchBar';
@@ -6,8 +7,6 @@ import { ProductSearch } from '../../organisms/ProductSearch';
 import { ConfigurationSearch } from '../../molecules/SearchForm/ConfigurationSearch';
 import { useSp } from '../../../hooks/useSp';
 import styles from  './HomeTemplate.module.scss';
-
-
 
 export const HomeTemplate = ({ products }: any) => {
   const isSp = useSp();

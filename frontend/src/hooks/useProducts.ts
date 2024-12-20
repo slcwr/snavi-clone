@@ -1,4 +1,5 @@
 // hooks/useProducts.ts
+'use client';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { GenerateProduct } from '../types/product'

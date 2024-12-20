@@ -1,7 +1,7 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  //output: "export",
   reactStrictMode: true,
   // リライトの設定を追加
   rewrites: async () => {

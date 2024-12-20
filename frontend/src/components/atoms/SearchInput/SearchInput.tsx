@@ -1,3 +1,4 @@
+'use client';
 import { TextField } from '@mui/material';
 import { ChangeEvent } from 'react';
 

@@ -1,5 +1,5 @@
 //src/components/organisms/ProductList
-
+'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../../styles/pages/products/ProductList.module.scss';
