@@ -7,6 +7,7 @@ import { GenerateProduct } from '../types/product'
 
 // fetcherを分離
 const fetcher = async (url: string, params: URLSearchParams) => {
+  //本番用
   const baseUrl = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
   const searchParams = new URLSearchParams();
   

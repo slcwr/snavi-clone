@@ -24,6 +24,7 @@ export const useUpdateProduct = (
             };
     
             // URLにクエリパラメータを正しく設定
+            //本番用
             const url = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
             url.searchParams.append('id', `eq.${updatedRow.id}`);
     

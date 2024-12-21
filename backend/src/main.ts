@@ -9,7 +9,7 @@ async function bootstrap() {
   });
   // CORSを最初に設定
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'https://snavi-clone.vercel.app/',
+    origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: [

@@ -3,3 +3,9 @@ node_modules
 *storybook.log
 
 .next
+
+.env
+
+.env.local
+
+.env.development

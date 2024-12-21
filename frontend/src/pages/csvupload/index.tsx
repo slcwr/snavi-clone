@@ -32,10 +32,14 @@ const CsvUploadComponent = () => {
   const handleUpload = async () => {
     try {
       const formattedData = formatCsvData(csvData);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products/upload/csv`,  {
+      //本番環境用
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/upload/csv`,  {
         method: 'POST',
         headers: {
+          //'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+          //'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
           'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
         },
         body: JSON.stringify({ data: formattedData }),
       });
@@ -48,6 +52,24 @@ const CsvUploadComponent = () => {
       
     }
   };
+
+
+    // // URLにクエリパラメータを正しく設定
+    // const url = new URL(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products`);
+    // url.searchParams.append('id', `eq.${updatedRow.id}`);
+
+    // const response = await fetch(url.toString(), {
+    //     method: 'PATCH',
+    //     headers: {
+    //         'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    //         'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+    //         'Content-Type': 'application/json',
+    //         'Prefer': 'return=minimal'
+    //     },
+    //     body: JSON.stringify(updateData)
+    // });
+
+
 
   if (!mounted) return null
 

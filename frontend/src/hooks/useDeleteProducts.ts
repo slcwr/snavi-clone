@@ -25,6 +25,7 @@ export const useDeleteProduct = (
     if (!productToDelete) return;
     try {
       const response = await fetch(
+        //本番用
         `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products?id=eq.${productToDelete}`,
         {
           method: 'DELETE',
