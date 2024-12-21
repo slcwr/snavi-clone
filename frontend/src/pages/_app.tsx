@@ -2,7 +2,7 @@
 import type { AppProps } from 'next/app'
 import '../styles/globals.scss'
 import StoreProvider from '@/stores/StoreProvider';
-//import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
@@ -14,7 +14,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   )
 }
 
-export default App
-// export default dynamic(() => Promise.resolve(App), {
-//   ssr: false
-// });
+//export default App
+export default dynamic(() => Promise.resolve(App), {
+  ssr: false
+});
