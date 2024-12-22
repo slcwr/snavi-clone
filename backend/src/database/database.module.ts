@@ -17,7 +17,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: false,
+        migrations: [__dirname + '/../migrations/*{.ts,.js}'],  // マイグレーションファイルのパス
+        migrationsRun: true,  // アプリケーション起動時にマイグレーションを実行
         autoLoadEntities: true,
       }),
     }),

@@ -1,12 +1,11 @@
-//src/components/organisms/ProductList
+//src/components/organisms/generateProductList
+'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../../styles/pages/products/ProductList.module.scss';
-import { CategorySearch } from '../../components/molecules/SearchForm/CategorySearch';
 import { usePagination } from '../../hooks/usePagination';
-import Button from '../../components/atoms/Button';
-import { useProducts } from '../../hooks/useProducts';
-import { Product } from '../../types/product'
+import { usegenerateProducts } from '../../hooks/useGenerateproducts';
+import { GenerateProduct } from '../../types/generateproduct'
 
 import {
     Table,
@@ -18,14 +17,19 @@ import {
     Paper
 } from '@mui/material';
 
-export default function ProductList() {
+export default function GenerateProductList() {
     const [isClient, setIsClient] = useState(false);
-    const { data, loading, error } = useProducts();
-    const [currentItems, setCurrentItems] = useState<Product[]>([]);
+    const { data, loading, error } = usegenerateProducts();
+    const [currentItems, setCurrentItems] = useState<GenerateProduct[]>([]);
     const pagination = usePagination({
         totalItems: data?.length || 0,
-        itemsPerPage: 3
+        itemsPerPage: 5
     });
+
+    useEffect(() => {
+        console.log('data:', data);  // データの中身を確認
+        console.log('currentItems:', currentItems);  // 現在の表示アイテムを確認
+      }, [data, currentItems]);
 
     useEffect(() => {
         setIsClient(true);
@@ -33,9 +37,13 @@ export default function ProductList() {
 
     useEffect(() => {
         if (data) {
+          try {
             setCurrentItems(data.slice(pagination.startIndex, pagination.endIndex));
+          } catch (err) {
+            console.error('Error setting current items:', err);
+          }
         }
-    }, [data, pagination.startIndex, pagination.endIndex]);
+      }, [data, pagination.startIndex, pagination.endIndex]);
 
     const renderContent = () => {
         if (!isClient) return null;
@@ -45,12 +53,10 @@ export default function ProductList() {
 
         return (
             <div>
-                <h2>ソフトウェア製品検索</h2>
-                <p>製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。</p>
+                <h2>型番指定見積</h2>
+                <p>必要な製品の数量を入力してください。</p>
                 <br />
-                <CategorySearch />
-                <br />
-                <h2>検索結果</h2>
+                <h2>表示フィルタ</h2>
 
                 <TableContainer component={Paper} sx={{ mt: 2 }}>
                     <Table
@@ -74,32 +80,24 @@ export default function ProductList() {
                             <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
                                 <TableCell sx={{ fontWeight: 'bold' }}>製品番号</TableCell>
                                 <TableCell sx={{ fontWeight: 'bold' }}>製品名</TableCell>
-                                <TableCell sx={{ fontWeight: 'bold' }}>概要</TableCell>
-                                <TableCell sx={{ fontWeight: 'bold' }} align="center">操作</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>製品価格</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {currentItems.map((product) => (
+                            {currentItems.map((generateproduct) => (
                                 <TableRow
-                                    key={product.id}
+                                    key={generateproduct.id}
                                     sx={{
                                         '&:hover': { backgroundColor: '#f8f8f8' },
                                     }}
                                 >
-                                    <TableCell>{product.productno}</TableCell>
-                                    <TableCell>{product.productname}</TableCell>
-                                    <TableCell>{product.description}</TableCell>
+                                    <TableCell>{generateproduct.generateproductno}</TableCell>
+                                    <TableCell>{generateproduct.generateproductname}</TableCell>
+                                    <TableCell>{generateproduct.price}</TableCell>
 
 
                                     <TableCell align="center">
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            size="small"
-                                            onClick={() => console.log('clicked', product.id)}
-                                        >
-                                            構成作成
-                                        </Button>
+
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -128,8 +126,8 @@ export default function ProductList() {
                         disabled={!pagination.hasNextPage}
                     >
                         次へ
-                    </button>
-                </div>
+                    </button> 
+                 </div>
             </div>
         );
     }

@@ -17,12 +17,12 @@ import {
   Box
 } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { GenerateProduct } from '@/types/product';
+import { Product } from '@/types/product';
 
 
 export default function AdminDashboard() {
   const [isClient, setIsClient] = useState(false);
-  const [generateproducts, setGenerateProduct ] = useState<GenerateProduct[]>([]);
+  const [generateproducts, setGenerateProduct ] = useState<Product[]>([]);
   const { handleCellEditCommit } = useUpdateProduct(setGenerateProduct);
   const { data, loading, error } = useProducts();
   const {

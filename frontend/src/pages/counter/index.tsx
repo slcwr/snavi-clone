@@ -1,7 +1,7 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/stores";
-import{ decrement,increment,setValue } from "@/stores/reducers/CounterReducer";
-import {useEffect } from "react";
+import{ decrement,increment,setValue } from "@/stores/reducers/CounterSlice";
+import { useEffect } from "react";
 
 export default function Home() {
     const { value } = useAppSelector((state) => state.counters);

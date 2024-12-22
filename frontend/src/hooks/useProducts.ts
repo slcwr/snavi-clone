@@ -2,7 +2,7 @@
 'use client';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { GenerateProduct } from '../types/product'
+import { Product } from '../types/product'
 
 
 // fetcherを分離
@@ -49,7 +49,7 @@ const fetcher = async (url: string, params: URLSearchParams) => {
   return Array.isArray(data) ? data : data.products || [];
 };
 
-export const useProducts = (initialData?: GenerateProduct[]) => {
+export const useProducts = (initialData?: Product[]) => {
   const router = useRouter();
   const { keyword, modelNumber, modelName } = router.query;
 
@@ -65,7 +65,8 @@ export const useProducts = (initialData?: GenerateProduct[]) => {
     ([_, paramsString]) => fetcher('products', new URLSearchParams(paramsString)),
     {
       fallbackData: initialData,
-      suspense: true,
+      //Suspenseを使用する際に、SSRでの初期データを作るか、falseにしておかないと初回レンダリング時にサーバーサイドで実行される
+      suspense: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     }

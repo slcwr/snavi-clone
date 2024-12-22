@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
+import { GenerateproductModule } from './generateproduct/generateproduct.module';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { DatabaseModule } from './database/database.module';
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
-    }),
+    }), GenerateproductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
