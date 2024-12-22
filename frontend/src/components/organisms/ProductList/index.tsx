@@ -7,7 +7,7 @@ import { CategorySearch } from '../../../components/molecules/SearchForm/Categor
 import { usePagination } from '../../../hooks/usePagination';
 import Button from '../../../components/atoms/Button';
 import { useProducts } from '../../../hooks/useProducts';
-import { GenerateProduct } from '../../../types/product'
+import { Product } from '../../../types/product'
 
 import {
     Table,
@@ -22,7 +22,7 @@ import {
 export default function ProductList() {
     const [isClient, setIsClient] = useState(false);
     const { data, loading, error } = useProducts();
-    const [currentItems, setCurrentItems] = useState<GenerateProduct[]>([]);
+    const [currentItems, setCurrentItems] = useState<Product[]>([]);
     const pagination = usePagination({
         totalItems: data?.length || 0,
         itemsPerPage: 3
