@@ -8,6 +8,7 @@ import Button from '../../components/atoms/Button';
 import { useProducts } from '../../hooks/useProducts';
 import { Product } from '../../types/product'
 
+
 import {
     Table,
     TableBody,
@@ -26,6 +27,7 @@ export default function ProductList() {
         totalItems: data?.length || 0,
         itemsPerPage: 3
     });
+    const router = useRouter();
 
     useEffect(() => {
         setIsClient(true);
@@ -36,6 +38,18 @@ export default function ProductList() {
             setCurrentItems(data.slice(pagination.startIndex, pagination.endIndex));
         }
     }, [data, pagination.startIndex, pagination.endIndex]);
+
+    const handleSubmit = async () => {
+        try {
+            await router.push({
+              pathname: '/generateproducts',
+      
+            });
+          } catch (error) {
+            console.error('Navigation error:', error);
+      
+          }
+    }
 
     const renderContent = () => {
         if (!isClient) return null;
@@ -96,7 +110,9 @@ export default function ProductList() {
                                             variant="contained"
                                             color="primary"
                                             size="small"
-                                            onClick={() => console.log('clicked', product.id)}
+                                            onClick={() =>
+                                                handleSubmit()
+                                              }
                                         >
                                             構成作成
                                         </Button>
