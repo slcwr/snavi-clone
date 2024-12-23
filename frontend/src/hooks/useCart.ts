@@ -2,7 +2,7 @@
 'use client';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '@/stores';
-import { addToCart, saveToLocalStorage } from '@/stores/reducers/CartSlice';
+import { addToCart } from '@/stores/reducers/CartSlice';
 
 const dispatch = useDispatch();
 const cart = useAppSelector((state) => state.cart);
@@ -30,9 +30,9 @@ const fetchAndCalculate = async () => {
   const data = await response.json();
 dispatch(addToCart(data));
 
-  const confirmCart = () => {
-    dispatch(saveToLocalStorage());
-  };
+  // const confirmCart = () => {
+  //   dispatch(saveToLocalStorage());
+  // };
 
-  return { cart, fetchAndCalculate, confirmCart };
+  return { cart, fetchAndCalculate };
 };
