@@ -3,7 +3,7 @@ import { useCSVReader } from 'react-papaparse'
 import { useState, useEffect } from 'react'
 import styles from './CsvUploadComponent.module.scss'
 
-const CsvUploadComponent = () => {
+export default function CsvUpload() {
   const [mounted, setMounted] = useState(false)
   const { CSVReader } = useCSVReader()
   const [csvData, setCsvData] = useState<any[]>([])
@@ -33,11 +33,12 @@ const CsvUploadComponent = () => {
     try {
       const formattedData = formatCsvData(csvData);
       //本番環境用
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/products/upload/csv`,  {
         method: 'POST',
         headers: {
-          //'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-          //'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+          'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         },
@@ -119,5 +120,3 @@ const CsvUploadComponent = () => {
     </div>
   );
 };
-
-export default CsvUploadComponent

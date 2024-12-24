@@ -41,9 +41,6 @@ const cartSlice = createSlice({
       return initialState;
     },
   },
-  // saveToLocalStorage: (state) => {
-  //   localStorage.setItem('cart', JSON.stringify(state.items));
-  // },
 });
 
 export const { addToCart, clearPersistedData } = cartSlice.actions;

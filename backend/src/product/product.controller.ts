@@ -8,6 +8,18 @@ import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) { }
+  
+  @Post('upload/csv')
+  @ApiOperation({ summary: 'CSVから製品を一括登録' })
+  @ApiResponse({ status: 201, description: '製品が一括登録されました' })
+  async uploadCsv(@Body() data: { data: CreateProductDto[] }) {
+    try {
+      return await this.productService.bulkCreate(data.data);
+    } catch (error) {
+      throw new HttpException('CSV upload failed', HttpStatus.BAD_REQUEST);
+    }
+  }
+
 
   @Post()
   @ApiOperation({ summary: '製品を作成' })
@@ -34,16 +46,7 @@ export class ProductController {
     return this.productService.remove(id);
   }
 
-  @Post('upload/csv')
-  @ApiOperation({ summary: 'CSVから製品を一括登録' })
-  @ApiResponse({ status: 201, description: '製品が一括登録されました' })
-  async uploadCsv(@Body() data: { data: CreateProductDto[] }) {
-    try {
-      return await this.productService.bulkCreate(data.data);
-    } catch (error) {
-      throw new HttpException('CSV upload failed', HttpStatus.BAD_REQUEST);
-    }
-  }
+  
 
   @Get()
   @ApiOperation({ summary: '製品を取得・検索' })
