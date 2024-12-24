@@ -83,13 +83,23 @@ export default function GenerateProductList() {
     setIsClient(true);
   }, []);
 
+  // useEffect(() => {
+  //   if (data) {
+  //     const start = pagination.startIndex;
+  //     const end = pagination.endIndex;
+  //     setCurrentItems(data.slice(start, end));
+  //   }
+  // }, [data, pagination.startIndex, pagination.endIndex]);
+
   useEffect(() => {
-    if (data) {
-      const start = pagination.startIndex;
-      const end = pagination.endIndex;
-      setCurrentItems(data.slice(start, end));
+    //データがない時は処理中断
+    if (!data) return;
+    const newItems = data.slice(pagination.startIndex, pagination.endIndex);
+    //値を比較して同じなら更新しない
+    if (JSON.stringify(newItems) !== JSON.stringify(currentItems)) {
+      setCurrentItems(newItems);
     }
-  }, [data, pagination.startIndex, pagination.endIndex]);
+  }, [data, pagination]);
 
   const handleQuantityChange = (
     generateproductId: string,

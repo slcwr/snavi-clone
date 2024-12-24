@@ -5,7 +5,7 @@ import { cartReducer } from "./reducers/CartSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector  } from "react-redux";
 import { Store, StoreRounded } from "@mui/icons-material";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from 'redux-persist/lib/storage';
+import storage from './customStorage';
 
 const rootReducer = combineReducers({
   cart: cartReducer

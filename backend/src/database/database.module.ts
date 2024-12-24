@@ -19,7 +19,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: false,
         migrations: [__dirname + '/../migrations/*{.ts,.js}'],  // マイグレーションファイルのパス
-        migrationsRun: true,  // アプリケーション起動時にマイグレーションを実行
+        migrationsRun: false,  // アプリケーション起動時にマイグレーションを実行
         autoLoadEntities: true,
       }),
     }),
