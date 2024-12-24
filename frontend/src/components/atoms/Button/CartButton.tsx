@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 
 
+
 // スタイルのカスタマイズ（オプション）
 const StyledButton = styled(Button)(({ theme }) => ({
   minWidth: '120px',
@@ -16,7 +17,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const Cartbutton = () => {
+export const Cartbutton = ()  => {
   const router = useRouter();
   const handleSearch = async () => {
     try {

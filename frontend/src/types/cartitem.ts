@@ -4,3 +4,12 @@ export interface CartItem {
     quantity: number;
     price: number;
 }
+
+
+export interface CartState {
+    cartId: string | null;
+    items: CartItem[];
+    totalAmount: number;
+    activeCartId: string | null;
+  }
+  

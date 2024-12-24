@@ -11,6 +11,8 @@ import { addToCart } from '@/stores/reducers/CartSlice';
 import { useAppDispatch } from '@/stores';
 import { CartItem } from '../../types/cartitem';
 
+
+
 import {
   Table,
   TableBody,
@@ -73,6 +75,8 @@ export default function GenerateProductList() {
   });
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
   const dispatch = useAppDispatch();
+
+
 
   useEffect(() => {
     console.log('data:', data); // データの中身を確認

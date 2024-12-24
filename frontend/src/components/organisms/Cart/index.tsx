@@ -1,7 +1,8 @@
 'use client';
-import { useAppSelector } from '@/stores';
+import { useAppSelector,useAppDispatch } from '@/stores';
 import { Cartrmbutton } from '../../atoms/Button/CartrmButton';
-
+import { RootState } from '../../../stores';
+import { initializeCart } from '../../../stores/reducers/CartSlice';
 import {
   Table,
   TableBody,
@@ -15,9 +16,19 @@ import {
   Button,
 } from '@mui/material';
 import { isTemplateMiddle } from 'typescript';
+import { useEffect } from 'react';
+import { initialize } from 'next/dist/server/lib/render-server';
 
-export const Cart = () =>  {
+export const Cart = () => {
+  const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
+  const cartId = useAppSelector((state) => state.cart.cartId);
+
+  useEffect(() => {
+    if (!cartId) {
+      dispatch(initializeCart());
+    }
+  })
 
   const calculateTotal = () => {
     return cartItems.reduce((sum, item) => {
@@ -30,7 +41,7 @@ export const Cart = () =>  {
   return (
     
     <div>
-        <h2>カート</h2>
+        <h2>カート ID: {cartId}</h2>
         <Cartrmbutton/>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table

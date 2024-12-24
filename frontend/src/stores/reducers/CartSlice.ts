@@ -1,22 +1,27 @@
 //CartSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartItem } from '@/types/cartitem';
+import { CartItem, CartState } from '@/types/cartitem';
 import { isTemplateExpression } from 'typescript';
-
-interface CartState {
-  items: CartItem[];
-  totalAmount: number;
-}
+import { v4 as uuidv4 } from 'uuid';
+import { actionAsyncStorage } from 'next/dist/client/components/action-async-storage-instance';
 
 const initialState: CartState = {
   items: [],
   totalAmount: 0,
+  cartId: null,
+  activeCartId: null,
 };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    initializeCart: (state) => {
+      state.cartId = uuidv4(); // 新しいカートIDを生成
+    },
+    setActiveCart: (state, action: PayloadAction<string>) => {
+      state.activeCartId = action.payload;
+    },
     addToCart: (state, action: PayloadAction<CartItem>) => {
       //既存のアイテムを探す
       const existingItem = state.items.find(
@@ -43,5 +48,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, clearPersistedData } = cartSlice.actions;
+export const { initializeCart, setActiveCart, addToCart, clearPersistedData } = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;
