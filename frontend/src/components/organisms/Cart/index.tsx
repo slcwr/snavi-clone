@@ -1,8 +1,9 @@
 'use client';
-import { useAppSelector,useAppDispatch } from '@/stores';
+import { useAppSelector, useAppDispatch } from '@/stores';
 import { Cartrmbutton } from '../../atoms/Button/CartrmButton';
-import { RootState } from '../../../stores';
-import { initializeCart } from '../../../stores/reducers/CartSlice';
+import { useSearchParams } from 'next/navigation';
+import { selectCartById } from '../../../stores/reducers/CartSlice';
+
 import {
   Table,
   TableBody,
@@ -13,36 +14,38 @@ import {
   Paper,
   Box,
   Typography,
-  Button,
 } from '@mui/material';
-import { isTemplateMiddle } from 'typescript';
-import { useEffect } from 'react';
-import { initialize } from 'next/dist/server/lib/render-server';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 export const Cart = () => {
-  const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const cartId = useAppSelector((state) => state.cart.cartId);
-
-  useEffect(() => {
-    if (!cartId) {
-      dispatch(initializeCart());
-    }
-  })
+  const searchParams = useSearchParams();
+  const state = useAppSelector((state) => state.cart);
+  console.log('entire cart state:', state);
+  console.log('carts object:', state.carts);
+  
+  const cartId = searchParams.get('id');
+  console.log('cartid', cartId);
+  //const cart = useAppSelector((state) => cartId ? state.cart.carts[cartId] : null);
+  const cart = useAppSelector((state) =>
+    selectCartById(state, cartId as string)
+  );
+  console.log('cart', cart);
+  //cart?.items: cartがnullまたはundefinedの場合、undefinedを返す。cartが存在する場合は、itemsプロパティにアクセス
+  const cartItems = cart?.items || [];
 
   const calculateTotal = () => {
-    return cartItems.reduce((sum, item) => {
-      const id = item.id;
-      const quantity = item.quantity || 0;
-      return sum + quantity * item.price;
+    return cartItems.reduce((sum, items) => {
+      const id = items.id as string;
+      const quantity = items.quantity || 0;
+      return sum + quantity * items.price;
     }, 0);
   };
 
   return (
-    
     <div>
-        <h2>カート ID: {cartId}</h2>
-        <Cartrmbutton/>
+      <h2>カート</h2>
+      <Cartrmbutton />
+      <a>構成リストID: {cartId}</a>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table
           sx={{
@@ -70,25 +73,25 @@ export const Cart = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cartItems.map((item) => (
+            {cartItems.map((items) => (
               <TableRow
-                key={item.id}
+                key={items.id}
                 sx={{
                   '&:hover': { backgroundColor: '#f8f8f8' },
                 }}
               >
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.quantity}</TableCell>
-                <TableCell>{item.price}</TableCell>
-                <TableCell>{item.quantity * item.price}円</TableCell>
+                <TableCell>{items.name}</TableCell>
+                <TableCell>{items.quantity}</TableCell>
+                <TableCell>{items.price}</TableCell>
+                <TableCell>{items.quantity * items.price}円</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       <Box sx={{ textAlign: 'right', mt: 2, pr: 2 }}>
-            <Typography variant="h6">合計金額: {calculateTotal()}円</Typography>
-     </Box>
+        <Typography variant="h6">合計金額: {calculateTotal()}円</Typography>
+      </Box>
     </div>
   );
-}
+};

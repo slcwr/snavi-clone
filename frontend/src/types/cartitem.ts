@@ -6,10 +6,13 @@ export interface CartItem {
 }
 
 
-export interface CartState {
-    cartId: string | null;
-    items: CartItem[];
-    totalAmount: number;
+  export interface CartState {
+    carts: {
+      [cartId: string]: {
+        items: CartItem[];
+        totalAmount: number;
+      }
+    };
     activeCartId: string | null;
   }
   
