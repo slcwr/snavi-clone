@@ -8,7 +8,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Cartbutton } from '@/components/atoms/Button/CartButton';
 import { CartItem } from '../../types/cartitem';
-import { useAppSelector, useAppDispatch,store } from '@/stores';
+import { useAppSelector, useAppDispatch, store } from '@/stores';
 
 import {
   Table,
@@ -24,7 +24,7 @@ import {
 import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
 import { styled } from '@mui/system';
 import { valueToPercent } from '@mui/base';
-import { updateCartItem,createCart } from '@/stores/reducers/CartSlice';
+import { updateCartItem, createCart } from '@/stores/reducers/CartSlice';
 
 const StyledNumberInput = styled(NumberInput)`
   & {
@@ -119,15 +119,32 @@ export default function GenerateProductList() {
     generateproductId: string,
     value: number | undefined
   ) => {
-    if (!activeCartId) {
-          console.log('Creating new cart...');
-          await dispatch(createCart());
-        }
-        // storeから直接取得
-        const state = store.getState();
-        const newCartId = state.cart.activeCartId;
+    try {
+      if (!activeCartId) {
+        console.log('Creating new cart...');
+        const createCartAction = await dispatch(createCart());
+        //payloadからの取得
+        const newCartId = createCartAction.payload;
         console.log('newCartId from store', newCartId);
-   
+        // 即座にアイテムを追加
+        handleAddItem(newCartId, generateproductId, value);
+      } else {
+        // 既存のカートにアイテムを追加
+        handleAddItem(activeCartId, generateproductId, value);
+      }
+    } catch (error) {
+      console.error('Error in handleQuantityChange:', error);
+    }
+  };
+  // storeから直接取得→パフォーマンス改善のためpayloadからの取得に変更
+  //const state = store.getState();
+
+  // アイテム追加のロジックを分離
+  const handleAddItem = (
+    cartId: any,
+    generateproductId: string,
+    value: number | undefined
+  ) => {
     if (!activeCartId) return;
     console.log('generateproductId', generateproductId);
     console.log('value', value);
