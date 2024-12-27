@@ -7,6 +7,7 @@ import { ProductSearch } from '../../organisms/ProductSearch';
 import { ConfigurationSearch } from '../../molecules/SearchForm/ConfigurationSearch';
 import { useSp } from '../../../hooks/useSp';
 import styles from  './HomeTemplate.module.scss';
+import { BreadcrumbsComponent }from '../../molecules/Breadcrumbs';
 
 export const HomeTemplate = ({ products }: any) => {
   const isSp = useSp();
@@ -15,6 +16,7 @@ export const HomeTemplate = ({ products }: any) => {
       {isSp ? (
     <div className={styles['home-template']}>
       <Header />
+      <BreadcrumbsComponent />
       <ConfigurationSearch />
       <main className={styles.container}>
         <div className={styles['main-content']}>

@@ -25,7 +25,7 @@ export const Cartrmbutton = () => {
   const handleClearData = async () => {
     try {
       await router.push({
-        pathname: '/generateproducts',
+        pathname: 'products/generateproducts',
       });
       dispatch(clearPersistedData());
     } catch (error) {

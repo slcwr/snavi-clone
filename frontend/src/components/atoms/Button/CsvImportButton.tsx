@@ -21,7 +21,7 @@ export const Csvimportbutton = () => {
   const handleSearch = async () => {
     try {
       await router.push({
-        pathname: '/csvupload',
+        pathname: 'admin/csvupload',
 
       });
     } catch (error) {

@@ -1,14 +1,15 @@
 //src/components/organisms/generateProductList
 
 import { useEffect, useState } from 'react';
-import { usePagination } from '../../hooks/usePagination';
-import { usegenerateProducts } from '../../hooks/useGenerateproducts';
-import { GenerateProduct } from '../../types/generateproduct';
+import { usePagination } from '../../../hooks/usePagination';
+import { usegenerateProducts } from '../../../hooks/useGenerateproducts';
+import { GenerateProduct } from '../../../types/generateproduct';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Cartbutton } from '@/components/atoms/Button/CartButton';
-import { CartItem } from '../../types/cartitem';
+import { CartItem } from '../../../types/cartitem';
 import { useAppSelector, useAppDispatch, store } from '@/stores';
+import { BreadcrumbsComponent } from '../../../components/molecules/Breadcrumbs';
 
 import {
   Table,
@@ -188,6 +189,7 @@ export default function GenerateProductList() {
 
     return (
       <div>
+        <BreadcrumbsComponent />
         <h2>型番指定見積</h2>
         <p>必要な製品の数量を入力してください。</p>
         <br />

@@ -72,7 +72,7 @@ export const Cartbutton = () => {
 
   const handleViewCart = async () => {
     try {
-      await router.push(`/cart?id=${activeCartId}`);
+      await router.push(`generateproducts/cart?id=${activeCartId}`);
     } catch (error) {
       console.error('Navigation error:', error);
     }

@@ -23,7 +23,7 @@ export const CartSearchbutton = () => {
   const activeCartId = state.cart.activeCartId;
   const handleSearch = async () => {
     try {
-      await router.push(`/cart?id=${activeCartId}`);
+      await router.push(`products/generateproducts/cart?id=${activeCartId}`);
     } catch (error) {
       console.error('Navigation error:', error);
     }

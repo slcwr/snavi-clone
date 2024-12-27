@@ -7,6 +7,7 @@ import { usePagination } from '../../hooks/usePagination';
 import Button from '../../components/atoms/Button';
 import { useProducts } from '../../hooks/useProducts';
 import { Product } from '../../types/product';
+import { BreadcrumbsComponent } from '../../components/molecules/Breadcrumbs';
 
 import {
   Table,
@@ -20,6 +21,7 @@ import {
 import { ConstructionOutlined } from '@mui/icons-material';
 
 export default function ProductList() {
+  
   const [isClient, setIsClient] = useState(false);
   const { data, loading, error } = useProducts();
   const [currentItems, setCurrentItems] = useState<Product[]>([]);
@@ -57,7 +59,7 @@ export default function ProductList() {
   const handleSubmit = async () => {
     try {
       await router.push({
-        pathname: '/generateproducts',
+        pathname: 'products/generateproducts',
       });
     } catch (error) {
       console.error('Navigation error:', error);
@@ -72,6 +74,7 @@ export default function ProductList() {
 
     return (
       <div>
+        <BreadcrumbsComponent/>
         <h2>ソフトウェア製品検索</h2>
         <p>
           製品のキーワード（製品名や主な機能など）から該当する製品を検索できます。

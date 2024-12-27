@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '@/stores';
 import { Cartrmbutton } from '../../atoms/Button/CartrmButton';
 import { useSearchParams } from 'next/navigation';
 import { selectCartById } from '../../../stores/reducers/CartSlice';
-
+import { BreadcrumbsComponent } from '../../molecules/Breadcrumbs';
 import {
   Table,
   TableBody,
@@ -40,12 +40,14 @@ export const Cart = () => {
       return sum + quantity * items.price;
     }, 0);
   };
-
+  
   return (
     <div>
+      <BreadcrumbsComponent/>
       <h2>カート</h2>
       <Cartrmbutton />
       <a>構成リストID: {cartId}</a>
+      
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table
           sx={{
