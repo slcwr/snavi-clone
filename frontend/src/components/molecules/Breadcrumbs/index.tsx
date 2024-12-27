@@ -11,6 +11,8 @@ export const BreadcrumbsComponent = () => {
     cart: 'カート',
     products: '商品一覧',
     generateproducts: '型番選択',
+    admin: '製品管理',
+    csvupload: 'CSVアップロード',
   };
   return (
     <Breadcrumbs separator="›" aria-label="breadcrumb">

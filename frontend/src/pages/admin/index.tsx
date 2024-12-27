@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Product } from '@/types/product';
+import { BreadcrumbsComponent } from '../../components/molecules/Breadcrumbs';
 
 
 export default function AdminDashboard() {
@@ -96,6 +97,7 @@ export default function AdminDashboard() {
       </Dialog>
 
       <Box sx={{ my: 4 }}>
+      <BreadcrumbsComponent/>
         <Typography variant="h4" component="h1" gutterBottom>
           製品管理
         </Typography>

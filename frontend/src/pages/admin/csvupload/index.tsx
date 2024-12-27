@@ -2,6 +2,7 @@
 import { useCSVReader } from 'react-papaparse'
 import { useState, useEffect } from 'react'
 import styles from './CsvUploadComponent.module.scss'
+import { BreadcrumbsComponent } from '../../../components/molecules/Breadcrumbs';
 
 export default function CsvUpload() {
   const [mounted, setMounted] = useState(false)
@@ -76,6 +77,8 @@ export default function CsvUpload() {
 
   return (
     <div className={styles.container}>
+      <BreadcrumbsComponent/>
+      <br/>
       {!showConfirmation ? (
         <CSVReader
           onUploadAccepted={(results: any) => {
