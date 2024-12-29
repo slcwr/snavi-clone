@@ -1,6 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import { Breadcrumbs, Link, Typography } from '@mui/material';
+import styles from './Breadcrumbs.module.scss'
 
 export const BreadcrumbsComponent = () => {
   const pathname = usePathname();
@@ -16,9 +17,11 @@ export const BreadcrumbsComponent = () => {
   };
   return (
     <Breadcrumbs separator="›" aria-label="breadcrumb">
+      <div className={styles.breadcrumb__container}>
       <Link underline="hover" color="inherit" href="/">
       製品情報・見積り
       </Link>
+      </div>
       {paths.map((path, index) => {
         const href = `/${paths.slice(0, index + 1).join('/')}`;
         const isLast = index === paths.length - 1;

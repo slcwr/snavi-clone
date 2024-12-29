@@ -22,8 +22,9 @@ export const HomeTemplate = ({ products }: any) => {
           <div className={styles['main-content__sidebar']}>
             <Sidebar />
           </div>
+         
           <div className={styles['main-content__content']}>   
-            <ProductSearch />  
+            <ProductSearch/> 
           </div>
         </div>
       </main>
@@ -39,9 +40,10 @@ export const HomeTemplate = ({ products }: any) => {
           <div className={styles['main-content__sidebar']}>
             <Sidebar />
           </div>
-          <div className={styles['main-content__content']}>
+          <ProductSearch />
+          {/* <div className={styles['main-content__content']}>
             <ProductSearch />
-          </div>
+          </div> */}
         </div>        
       </main>
       <Footer />

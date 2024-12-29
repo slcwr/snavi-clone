@@ -7,7 +7,8 @@ import { styled } from '@mui/material/styles';
 // スタイルのカスタマイズ（オプション）
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: '#4caf50',
-  minWidth: '120px',
+  minWidth: '100px',
+  fontSize: '12px', 
   '&.MuiButton-contained': {
     '&:hover': {
       backgroundColor: '#45a049',
@@ -33,8 +34,8 @@ export const Loginbutton = () => {
         onClick={handleSearch}
         color="primary"
         sx={{
-          minWidth: '70px',
-          px: 1.5, // パディングを調整
+          minWidth: '60px',
+          px: 0, // パディングを調整
         }}
       >
         ログイン

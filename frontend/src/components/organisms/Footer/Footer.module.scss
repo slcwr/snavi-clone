@@ -1,7 +1,7 @@
 // components/organisms/Footer/Footer.module.scss
 @use '../../../styles/mixins' as *;
 .footer {
-    line-height: 0.9;
+    line-height: 0.8;
     background-color: #fff;
     padding: 0;
     width: 100%; // サイドバーの幅とギャップを引く
@@ -20,7 +20,7 @@
         margin-left: calc(-50vw + 50%); // ネガティブマージンで全幅に
         margin-right: calc(-50vw + 50%);
         order: 2;
-        padding: 20px; // 内側の余白
+        padding: 10px; // 内側の余白
       }
     }
   

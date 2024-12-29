@@ -69,8 +69,7 @@ export const Sidebar: FC<Props> = ({ className, ...props }) => {
 
     const handleFilter = (selectedOS: string[], selectedModels: string[]) => {
       console.log('Selected OS:', selectedOS);
-      setFilteredOS(selectedOS);
-      //setFilteredModels(selectedModels);
+      setFilteredOS(selectedOS)
     }
 
   return (
