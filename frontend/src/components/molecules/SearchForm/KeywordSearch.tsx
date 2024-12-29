@@ -24,13 +24,13 @@ export const KeywordSearch = () => {
             placeholder="型番を入力"
             value={modelNumber}
             onChange={setModelNumber}
-            width="200px"
+            width="150px"
           />
           <SearchInput
             placeholder="品名を入力"
             value={modelName}
             onChange={setModelName}
-            width="200px"
+            width="150px"
           />
           <SearchInput
             placeholder="キーワードを入力"

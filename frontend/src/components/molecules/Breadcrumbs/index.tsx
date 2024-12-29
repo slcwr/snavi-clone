@@ -28,13 +28,17 @@ export const BreadcrumbsComponent = () => {
         const displayName = pathNameMap[path] || path;
 
         return isLast ? (
+          <div className={styles.breadcrumb__container}>
           <Typography key={href} color="text.primary">
             {displayName}
           </Typography>
+          </div>
         ) : (
+          <div className={styles.breadcrumb__container}>
           <Link key={href} underline="hover" color="inherit" href={href}>
             {displayName}
           </Link>
+          </div>
         );
       })}
     </Breadcrumbs>
