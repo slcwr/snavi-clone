@@ -9,15 +9,15 @@ export const BreadcrumbsComponent = () => {
   //パスに対応する表示名のマッピング
   const pathNameMap: { [key: string]: string } = {
     cart: 'カート',
-    products: '商品一覧',
-    generateproducts: '型番選択',
+    products: '製品・キーワード検索',
+    generateproducts: '型番選択設定',
     admin: '製品管理',
     csvupload: 'CSVアップロード',
   };
   return (
     <Breadcrumbs separator="›" aria-label="breadcrumb">
       <Link underline="hover" color="inherit" href="/">
-        ホーム
+      製品情報・見積り
       </Link>
       {paths.map((path, index) => {
         const href = `/${paths.slice(0, index + 1).join('/')}`;
