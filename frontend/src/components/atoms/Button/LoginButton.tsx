@@ -1,9 +1,8 @@
 // components/atoms/Button/CsvReadButton.tsx
 'use client';
-//import { Button, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
-import LoginModal from '../../organisms/Login';
+import { LoginModal }  from '../../organisms/Login';
 import { Button, TextField, Typography } from '@mui/material';
 import Modal from 'react-modal';
 
@@ -24,15 +23,14 @@ const Container = styled('div')({
   flexDirection: 'column',
   alignItems: 'center',
   justyContant: 'center',
-  //height: '100vh',
   backgroundColor: '#f0f0f0',
 });
 
 const LoginCard = styled('div')({
   backgroundColor: '#fff',
-  //padding: '20px',
+  padding: '20px',
   borderRadius: '10px',
-  //boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+  boxShadow: '0 0 5px rgba(0,0,0,0.1)',
 });
 
 const customStyles = {
@@ -48,9 +46,9 @@ const customStyles = {
   content: {
     position: 'absolute',
     top: '150px',
-    left: '150px',
-    right: '150px',
-    bottom: '150px',
+    left: '380px',
+    right: '380px',
+    bottom: '330px',
     border: '1px solid #ccc',
     background: '#fff',
     overflow: 'auto',
@@ -79,36 +77,11 @@ export const Loginbutton = () => {
         ログイン
       </StyledButton>
 
-      <Modal
-        isOpen={editModalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-      >
-        <LoginCard>
-          <Typography variant="h5" gutterBottom>
-            ログイン
-          </Typography>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            label="ユーザー名"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            label="パスワード"
-            type="password"
-          />
-          <Button variant="contained" color="primary" onClick={closeModal}>
-            キャンセル
-          </Button>
-          <Button variant="contained" color="primary">
-            ログイン
-          </Button>
-        </LoginCard>
-      </Modal>
+      <LoginModal
+      isOpen={editModalIsOpen}
+      onClose={closeModal}
+      />
+      
     </Container>
   );
 };

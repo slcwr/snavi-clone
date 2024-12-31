@@ -1,179 +1,172 @@
 // styles/components/Sidebar.module.scss
 @use '../../../styles/mixins' as *;
 
-
 .sidebar {
-    width: 100%;
-    flex-shrink: 0;
-    top: 0px;
-    position: sticky;
-    z-index: 5; 
-    
-  
-    &__nav {
-      background-color: #f0f8ff;
-      border-radius: 4px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
+  width: 250px;
+  flex-shrink: 0;
+  top: 0px;
+  position: sticky;
+  z-index: 5;
 
-    &__nav2 {
-        background-color: #F2E6CE;
-        border-radius: 4px;
-        margin-bottom: 16px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
+  &__nav {
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 
-      &__nav3 {
-        background-color: #f1d3de;
-        border-radius: 4px;
-        margin-bottom: 16px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
+  &__nav2 {
+    background-color: #f2e6ce;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 
-  
-    &__menu {
+  &__nav3 {
+    background-color: #f1d3de;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  &__menu {
+    list-style: none;
+    padding: 8px;
+  }
+
+  &__menuItem {
+    list-style: none;
+    margin-bottom: 4px;
+    color: black;
+    text-decoration: none;
+
+    &:last-child {
       list-style: none;
-      padding: 8px;
-    }
-  
-    &__menuItem {
-      list-style: none; 
-      margin-bottom: 4px;
-      color: black;
-      text-decoration: none;
-  
-      &:last-child {
-        list-style: none; 
-        margin-bottom: 0;
-      }
-    }
-
-    &__linkhead {
-        line-height: 0.6;
-        background-color: skyblue;
-        display: block;
-        padding: 8px 12px;
-        color: #333;
-        font-weight: bolder;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-      }
-      &__linkhead2 {
-        line-height: 0.6;
-        background-color: #FFE4B5;
-        display: block;
-        padding: 8px 12px;
-        color: #333;
-        font-weight: bolder;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-      }
-      &__linkhead3 {
-        line-height: 0.6;
-        background-color: #e57171;
-        display: block;
-        padding: 8px 12px;
-        color: #333;
-        font-weight: bolder;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-      }
-
-  
-    &__link {
-      line-height: 0.6;
-      font-size: 14px;
-      display: block;
-      padding: 6px 8px;
-      color: #333;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-      
-  
-      &:hover {
-        background-color: #e3f2fd;
-      }
-    }
-
-    &__link2 {
-        line-height: 0.6;
-        font-size: 14px;
-        list-style: none;
-        display: block;
-        background-color: #F2E6CE;
-        padding: 6px 8px;
-        color: #333;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-
-        &:hover {
-            background-color: #F8F2E5;
-          }
-      }
-
-      &__link3 {
-        line-height: 0.6;
-        font-size: 14px;
-        list-style: none;
-        display: block;
-        padding: 6px 8px;
-        color: #333;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-
-        &:hover {
-            background-color: #fceef4;
-          }
-      }
-
-    &__filterTitle {
-      background-color: #fff3e0;
-      font-size: 14px;
-      font-weight: bold;
-      color: #333;
-    }
-  
-    &__filterGroup {
-        line-height: 1.0;  
-      list-style: none; 
-      font-size: 14px;
-    }
-  
-    &__filterLabel {
-      padding-left: 20px;  // 左側にインデント
-      list-style: none;
-      font-size: 14px;
-      color: #666;
-    }
-  
-    &__filterOption {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      gap: 8px;
-    }
-  
-    &__radio {
-      margin: 4px;
-    }
-  
-    &__checkbox {
-      
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      
-  
-      input[type="checkbox"] {
-        margin: 4px;
-      }
+      margin-bottom: 0;
     }
   }
+
+  &__linkhead {
+    line-height: 0.6;
+    background-color: skyblue;
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    font-weight: bolder;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+  &__linkhead2 {
+    line-height: 0.6;
+    background-color: #ffe4b5;
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    font-weight: bolder;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+  &__linkhead3 {
+    line-height: 0.6;
+    background-color: #e57171;
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    font-weight: bolder;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+
+  &__link {
+    line-height: 0.6;
+    font-size: 14px;
+    display: block;
+    padding: 6px 8px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #e3f2fd;
+    }
+  }
+
+  &__link2 {
+    line-height: 0.6;
+    font-size: 14px;
+    list-style: none;
+    display: block;
+    background-color: #f2e6ce;
+    padding: 6px 8px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #f8f2e5;
+    }
+  }
+
+  &__link3 {
+    line-height: 0.6;
+    font-size: 14px;
+    list-style: none;
+    display: block;
+    padding: 6px 8px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #fceef4;
+    }
+  }
+
+  &__filterTitle {
+    background-color: #fff3e0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  &__filterGroup {
+    line-height: 1;
+    list-style: none;
+    font-size: 14px;
+  }
+
+  &__filterLabel {
+    padding-left: 20px; // 左側にインデント
+    list-style: none;
+    font-size: 14px;
+    color: #666;
+  }
+
+  &__filterOption {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  &__radio {
+    margin: 4px;
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    input[type='checkbox'] {
+      margin: 4px;
+    }
+  }
+}

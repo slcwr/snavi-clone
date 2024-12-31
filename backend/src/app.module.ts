@@ -8,6 +8,8 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { GenerateproductModule } from './generateproduct/generateproduct.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { GenerateproductModule } from './generateproduct/generateproduct.module'
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
-    }), GenerateproductModule,
+    }), GenerateproductModule, UserModule, AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
