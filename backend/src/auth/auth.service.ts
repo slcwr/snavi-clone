@@ -1,30 +1,26 @@
-import { Injectable, NotAcceptableException } from '@nestjs/common';
-//import bcrypt = require('bcrypt');
+import {
+  Injectable,
+  NotAcceptableException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { userInfo } from 'os';
-import { User } from 'src/user/entities/user.entity';
-import { UserService } from 'src/user/user.service';
-import { isErrored } from 'stream';
+import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UserService,
+    private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
-  async validateUser(id: number): Promise<any> {
-    const user = await this.usersService.findOne(id);
-    if (!user) {
-      throw new NotAcceptableException('ユーザが見つかりません');
-    }
-    return user;
-  }
+  async login(LoginDto: { username: string; password: string }) {
+    const user = await this.userService.findOne(LoginDto.username) as User;
 
-  async login(user: any) {
-    const payload = {
-      username: user.username,
-      sub: user.id,
-    };
+    if (!user || user.password !== LoginDto.password) {
+      throw new UnauthorizedException('Invaulid credentials');
+    }
+    const payload = { username: user.username, sub: user.id };
 
     return {
       access_token: this.jwtService.sign(payload),

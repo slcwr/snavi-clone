@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module,forwardRef } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from 'src/user/user.module';
 import { JwtStrategy } from './jwt.strategy';
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
@@ -15,9 +16,10 @@ import { JwtStrategy } from './jwt.strategy';
     // 有効期間を設定
     signOptions: { expiresIn: '1h'}
   }),
-  UserModule
+  forwardRef(() => UserModule) 
 ],
   providers: [AuthService,JwtStrategy],
   exports: [AuthService],
+  controllers: [AuthController],
 })
 export class AuthModule {}

@@ -1,6 +1,12 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
+export interface User {
+    id: number;
+    username: string;
+    password: string;
+}
+
 @Entity('users')
 export class User {
   @ApiProperty({ description: 'The unique identifier' })

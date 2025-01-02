@@ -12,7 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             secretOrKey: process.env.JWT_SECRET,
         });
     }
-    async validate(payload: any) {
-        const user =await this.authService.validateUser(payload.sub);
-    }
+    // async validate(payload: any) {
+    //     const user =await this.authService.validateUser(payload.sub);
+    // }
  }

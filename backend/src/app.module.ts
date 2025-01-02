@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ProductController } from './product/product.controller';
 import { AppService } from './app.service';
+import { AuthService } from './auth/auth.service';
 import { ProductModule } from './product/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
@@ -14,15 +15,14 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     DatabaseModule,
-    ProductModule, 
+    ProductModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
-    }), GenerateproductModule, UserModule, AuthModule,
+    }),
+    GenerateproductModule,
+    UserModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
-
-
