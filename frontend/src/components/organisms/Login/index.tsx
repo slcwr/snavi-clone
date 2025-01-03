@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Button, TextField, Typography } from '@mui/material';
 import Modal from 'react-modal';
-
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '@/stores/reducers/AuthSlice';
 
 const LoginCard = styled('div')({
   backgroundColor: '#fff',
@@ -52,6 +53,7 @@ interface FormData {
 
 
 export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+  const dispatch = useDispatch();
   const closeModal = () => {
     onClose();
   };
@@ -88,10 +90,20 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
       })
     });
    const data = await response.json();
+
+   if (response.ok) {
+    dispatch(loginSuccess({
+      user: data.user,
+      token: data.token
+    }));
+    onClose(); //モーダルをとじる
+   } else {
+    console.error('Login failed:', data);
+   }
   } catch (error) {
     console.log("login error")
   }
-  }
+  };
 
   return (
     <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles} ariaHideApp={false}>

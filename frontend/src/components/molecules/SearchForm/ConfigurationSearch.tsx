@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from '@/stores';
 import { CartSearchbutton } from '../../atoms/Button/CartSearchButton';
 import { useState } from 'react';
 import { Loginbutton } from '../../atoms/Button/LoginButton';
+import { Logoutbutton } from '../../atoms/Button/LogoutButton';
 import { BreadcrumbsComponent } from '../../molecules/Breadcrumbs';
 
 export const ConfigurationSearch = () => {
@@ -12,10 +13,12 @@ export const ConfigurationSearch = () => {
   return (
     <div className={styles.configSearch__header}>
       <div className={styles.configSearch__element}>
-        <div>
-          <BreadcrumbsComponent />
-          <Loginbutton />
-        </div>
+        <BreadcrumbsComponent />
+      
+      <div className={styles.configSearch__input}>
+        <Loginbutton />
+        <Logoutbutton />
+      </div>
       </div>
 
       <div className={styles.configSearch__actions}>
@@ -27,7 +30,7 @@ export const ConfigurationSearch = () => {
         </div>
         <div className={styles.configSearch__input}>
           <label>構成リストID</label>
-        
+
           <input
             type="text"
             value={InputCartId}

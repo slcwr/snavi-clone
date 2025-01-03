@@ -1,10 +1,13 @@
-// components/atoms/Button/CsvReadButton.tsx
+// components/atoms/Button/LogoutButton.tsx
 'use client';
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
-import { LoginModal }  from '../../organisms/Login';
-import { Button } from '@mui/material';
-
+import { LoginModal } from '../../organisms/Login';
+import { Button, TextField, Typography } from '@mui/material';
+import Modal from 'react-modal';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/stores/reducers/AuthSlice';
+import { LogoutModal } from '../../organisms/Logout';
 
 // スタイルのカスタマイズ（オプション）
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -59,30 +62,26 @@ const customStyles = {
   },
 };
 
-export const Loginbutton = () => {
+export const Logoutbutton = () => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+
+ 
   const closeModal = () => {
     setEditModalIsOpen(false);
   };
 
   return (
     <Container>
-      <h6>(管理者ID:admin/admin)</h6>
       <StyledButton
         variant="contained"
         color="primary"
         onClick={() => {
-          setEditModalIsOpen(true);
+            setEditModalIsOpen(true);
         }}
       >
-        ログイン
+        ログアウト
       </StyledButton>
-      
-      <LoginModal
-      isOpen={editModalIsOpen}
-      onClose={closeModal}
-      />
-      
+      <LogoutModal isOpen={editModalIsOpen} onClose={closeModal} />
     </Container>
   );
 };
