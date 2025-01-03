@@ -5,20 +5,22 @@ import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from 'src/user/user.module';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-  PassportModule,
-  // JWTを使うための設定
-  JwtModule.register({
-    // envファイルから秘密鍵を渡す
-    secret: process.env.JWT_SECRET,
-    // 有効期間を設定
-    signOptions: { expiresIn: '1h'}
-  }),
-  forwardRef(() => UserModule) 
-],
-  providers: [AuthService,JwtStrategy],
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '1h' },
+      }),
+      inject: [ConfigService],
+    }),
+    forwardRef(() => UserModule)
+  ],
+  providers: [AuthService, JwtStrategy],
   exports: [AuthService],
   controllers: [AuthController],
 })

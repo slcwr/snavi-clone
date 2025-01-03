@@ -9,7 +9,7 @@ async function bootstrap() {
   });
   // CORSを最初に設定
   app.enableCors({
-    origin: process.env.FRONTEND_URL,
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: [

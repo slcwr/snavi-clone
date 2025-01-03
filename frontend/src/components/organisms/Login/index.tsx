@@ -1,9 +1,10 @@
 // components/molecules/ModalContent/index.tsx
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Button, TextField, Typography, Box } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import Modal from 'react-modal';
+
 
 const LoginCard = styled('div')({
   backgroundColor: '#fff',
@@ -43,41 +44,94 @@ interface LoginModalProps {
   onClose: () => void;
 }
 
+interface FormData {
+  username: string;
+  password: string;
+}
+
+
+
 export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   const closeModal = () => {
     onClose();
   };
 
-  const handlesubmit = () => {
-    
+  const [formData, setFormData] = useState<FormData>({
+    username: '',
+    password: ''
+  });
+
+  const hundleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+  
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try{
+      console.log("test");
+    const baseUrl = new URL(`http://localhost:3001/auth/login`);
+    const response = await fetch(baseUrl,{
+      //const response = await fetch(`/rest/v1/auth/login`,{
+      method: 'POST',
+      headers: {
+        //'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+        //'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''}`,
+        'Content-Type': 'application/json'
+      },
+     body: JSON.stringify({
+        username: formData.username,
+        password: formData.password
+      })
+    });
+   const data = await response.json();
+  } catch (error) {
+    console.log("login error")
+  }
   }
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
+    <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles} ariaHideApp={false}>
       <LoginCard>
         <Typography variant="h5" gutterBottom>
           ログイン
         </Typography>
+        <form onSubmit={handleSubmit}>
         <TextField
+          name="username"
           variant="outlined"
           margin="normal"
           fullWidth
-          label="ユーザー名"
+          label="username"
+          value={formData.username}
+          onChange={hundleChange}
         />
         <TextField
+          name="password"
           variant="outlined"
           margin="normal"
           fullWidth
-          label="パスワード"
+          label="password"
           type="password"
+          autoComplete="username"
+          //aria-invalid="false"
+          value={formData.password}
+          onChange={hundleChange}
         />
+        
         <Button variant="contained" color="primary" onClick={closeModal}>
           キャンセル
         </Button>
-        <Button variant="contained" color="primary" onClick={handlesubmit}>
+        <Button type="submit" variant="contained">
           ログイン
         </Button>
+        </form>
+        
       </LoginCard>
     </Modal>
   );
 };
+

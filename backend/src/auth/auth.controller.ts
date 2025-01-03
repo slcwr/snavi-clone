@@ -1,9 +1,9 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
 
-@ApiTags('auth') // エンドポイントのグループ化
+
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

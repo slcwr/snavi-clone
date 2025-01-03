@@ -2,10 +2,7 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import styles from './ModalContent.module.scss';
-import {
-  ConstructionOutlined,
-  SettingsCellOutlined,
-} from '@mui/icons-material';
+
 
 interface ModalContentProps {
   isOpen: boolean;
@@ -20,17 +17,11 @@ export const ModalContent: React.FC<ModalContentProps> = ({
 }) => {
   const [selectedOS, setSelectedOS] = useState<string[]>([]);
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
-
   const [show, setshow] = useState(false);
-
-  //const divRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     // モーダルが開いているときのみイベントリスナーを設定
-    if (!isOpen) return;
-    console.log('test');
-
-    
+    if (!isOpen) return;  
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       // モーダルの外側のオーバーレイ要素をクリックした時のみ閉じる
@@ -39,10 +30,8 @@ export const ModalContent: React.FC<ModalContentProps> = ({
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    console.log('test2');
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      console.log('test4');
     };
   }, [isOpen, onClose]);
 
